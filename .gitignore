@@ -7,28 +7,23 @@ com_crashlytics_export_strings.xml
 # Local configuration file (sdk path, etc)
 local.properties
  
-# Gradle generated files
+# General Folders
+# gradle/ comment this when using gradle wrapper.
+bin/
+gen/
+tmp/
+# proguard/ comment if not using proguard.
 .gradle/
+.settings/
+.idea/
 
-# Log Files
-*.log
- 
-# Signing files
-.signing/
- 
-# User-specific configurations
-.idea/libraries/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
+# General Files
+.project
+.classpath
 *.iml
+# gradlew comment when using gradle wrapper
+# gradlew.bat comment when using gradle wrapper
+
 
 # OS generated files #
 ######################
@@ -59,9 +54,6 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Local configuration file (sdk path, etc)
-local.properties
 
 # Windows Installer files
 *.cab
