@@ -1,0 +1,70 @@
+# Built application files
+/*/build/
+ 
+# Crashlytics configuations
+com_crashlytics_export_strings.xml
+ 
+# Local configuration file (sdk path, etc)
+local.properties
+ 
+# Gradle generated files
+.gradle/
+
+# Log Files
+*.log
+ 
+# Signing files
+.signing/
+ 
+# User-specific configurations
+.idea/libraries/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+*.iml
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+## File-based project format
+*.ipr
+*.iws
+*.iml
+
+### SublimeText ###
+# workspace files are user-specific
+*.sublime-workspace
+
+# project files should be checked into the repository, unless a significant
+# proportion of contributors will probably not be using SublimeText
+# *.sublime-project
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
