@@ -73,12 +73,12 @@ public class RegisterActivity extends Activity {
         // Register Button Click event
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String name = inputFullName.getText().toString();
-                String email = inputEmail.getText().toString();
+                String ime = inputFullName.getText().toString();
+                String korisnicko_ime = inputEmail.getText().toString();
                 String password = inputPassword.getText().toString();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+                if (!ime.isEmpty() && !korisnicko_ime.isEmpty() && !password.isEmpty()) {
+                    registerUser(ime, korisnicko_ime, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -104,7 +104,7 @@ public class RegisterActivity extends Activity {
      * Function to store user in MySQL database will post params(tag, name,
      * email, password) to register url
      * */
-    private void registerUser(final String name, final String email,
+    private void registerUser(final String ime, final String korisnicko_ime,
                               final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
@@ -129,13 +129,14 @@ public class RegisterActivity extends Activity {
                        // String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String surname = "probni";
+                        String ime = user.getString("ime");
+                        String korisnicko_ime = user.getString("korisnicko_ime");
+                        String prezime = "probni";
+                        Integer id_ucenika=user.getInt("id_ucenika");
 
                         // Inserting row in users table
   //                      db.addUser(name, email, uid);
-                        db.addUser(name, surname, email);
+                        db.addUser(id_ucenika, ime, prezime, korisnicko_ime);
 
                         // Launch login activity
                         Intent intent = new Intent(
@@ -172,8 +173,8 @@ public class RegisterActivity extends Activity {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("tag", "register");
-                params.put("name", name);
-                params.put("email", email);
+                params.put("ime", ime);
+                params.put("korisnicko_ime", korisnicko_ime);
                 params.put("password", password);
 
                 return params;
