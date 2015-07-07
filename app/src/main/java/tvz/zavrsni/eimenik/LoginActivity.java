@@ -8,6 +8,9 @@ import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.SessionManager;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,13 +73,13 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                String email = inputEmail.getText().toString();
+                String korisnicko_ime = inputEmail.getText().toString();
                 String password = inputPassword.getText().toString();
 
                 // Check for empty data in the form
-                if (email.trim().length() > 0 && password.trim().length() > 0) {
+                if (korisnicko_ime.trim().length() > 0 && password.trim().length() > 0) {
                     // login user
-                    checkLogin(email, password);
+                    checkLogin(korisnicko_ime, password);
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
@@ -103,7 +106,7 @@ public class LoginActivity extends Activity {
     /**
      * function to verify login details in mysql db
      * */
-    private void checkLogin(final String email, final String password) {
+    private void checkLogin(final String korisnicko_ime, final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
@@ -131,15 +134,34 @@ public class LoginActivity extends Activity {
                        // String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String surname = user.getString("surname");
-                        String email = user.getString("email");
+                        String ime = user.getString("ime");
+                        String prezime = user.getString("prezime");
+                        String korisnicko_ime = user.getString("korisnicko_ime");
+                        Integer id_ucenika=user.getInt("id_ucenika");
 
+                        JSONObject upis = jObj.getJSONObject("upis");
+                        Integer id_upisa=upis.getInt("id_upisa");
+                        Integer id_razreda=upis.getInt("id_razreda");
+                        String datum_upisa=upis.getString("datum_upisa");
+                        /*SimpleDateFormat dupisa = new SimpleDateFormat("yyyy-MM-dd");
+                        Date datum_u = null;
+                        try {
+                            datum_u = dupisa.parse(datum_upisa);
+                        }catch(ParseException e){
+                            e.printStackTrace();
+                        }*/
 
+                        JSONObject razredi = jObj.getJSONObject("razredi");
+                        Integer id_razreda=razredi.getInt("id_razreda");
+                        Integer godina=razredi.getInt("godina");
+                        Integer razred=razredi.getInt("razred");
+                        String godina_upisa=razredi.getString("godina_upisa");
 
                         // Inserting row in users table
                         //db.addUser(name, surname, email, uid);
-                        db.addUser(name, surname, email);
+                        db.addUser(id_ucenika, ime, prezime, korisnicko_ime);
+                        db.addUpis(id_upisa, id_ucenika, id_razreda, datum_upisa);
+                        db.addRazredi(id_razreda, godina, razred, godina_upisa);
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
@@ -174,7 +196,7 @@ public class LoginActivity extends Activity {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("tag", "login");
-                params.put("email", email);
+                params.put("korisnicko_ime", korisnicko_ime);
                 params.put("password", password);
 
                 return params;
