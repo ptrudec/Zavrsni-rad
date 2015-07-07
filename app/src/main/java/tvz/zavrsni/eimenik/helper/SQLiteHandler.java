@@ -26,7 +26,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     // Login table name
     private static final String TABLE_UCENICI="ucenici";
-    // Login Table Columns names
     private static final String KEY_ID_UCENIKA = "id_ucenika";
     private static final String KEY_IME = "ime";
     private static final String KEY_PREZIME = "prezime";
@@ -89,7 +88,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_RAZREDI = "CREATE TABLE " + TABLE_RAZREDI + "("
             + KEY_ID_RAZREDA + " INTEGER PRIMARY KEY, " + KEY_GODINA + " INTEGER,"
-            + KEY_RAZRED + " INTEGER, " + KEY_GODINA_UPISA + " DATETIME " + ")";
+            + KEY_RAZRED + " TEXT, " + KEY_GODINA_UPISA + " DATETIME " + ")";
 
     private static final String CREATE_TABLE_UPISANI_PREDMETI = "CREATE TABLE " + TABLE_UPISANI_PREDMETI + "("
             + KEY_REDNI_BR_UPISA + " INTEGER PRIMARY KEY, " + KEY_ID_UPISA + " INTEGER, "
@@ -217,13 +216,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New upis inserted into sqlite: " + id);
     }
 
-    public void addRazredi(Integer id_razreda, Integer godina, Integer razred, String godina_upisa) {
+    public void addRazredi(Integer id_razreda, Integer godina, String razred, String godina_upisa) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_RAZREDA, id_razreda); // Name
-        values.put(KEY_GODINA, godina); // Surname
-        values.put(KEY_RAZRED, razred); // Email
+        values.put(KEY_ID_RAZREDA, id_razreda);
+        values.put(KEY_GODINA, godina);
+        values.put(KEY_RAZRED, razred);
         values.put(KEY_GODINA_UPISA, godina_upisa);
         // Inserting Row
         long id = db.insert(TABLE_RAZREDI, null, values);
@@ -231,6 +230,121 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         Log.d(TAG, "New razredi inserted into sqlite: " + id);
     }
+
+    public void addUpisaniPredmeti(Integer redni_br_upisa, Integer id_upisa, Integer id_predmeta, String datum_upisa, Integer zavrsna_ocjena_prdmet, String datum_zavrsne_ocjene) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
+        values.put(KEY_ID_UPISA, id_upisa);
+        values.put(KEY_ID_PREDMETA, id_predmeta);
+        values.put(KEY_DATUM_UPISA, datum_upisa);
+        values.put(KEY_ZAVRSNA_OCJENA_PREDMETA, zavrsna_ocjena_prdmet);
+        values.put(KEY_DATUM_ZAVRSNE_OCJENE, datum_zavrsne_ocjene);
+        // Inserting Row
+        long id = db.insert(TABLE_UPISANI_PREDMETI, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New razredi inserted into sqlite: " + id);
+    }
+
+    public void addPredmeti(Integer id_predmeta, String naziv_predmeta) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_PREDMETA, id_predmeta);
+        values.put(KEY_NAZIV_PREDMETA, naziv_predmeta);
+        // Inserting Row
+
+        long id = db.insert(TABLE_PREDMETI, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New predmeti inserted into sqlite: " + id);
+    }
+
+    public void addNastavnici(Integer id_nastavnika, Integer oib_nastavnika, String ime, String prezime) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_NASTAVNIKA, id_nastavnika);
+        values.put(KEY_OIB_NASTAVNIKA, oib_nastavnika);
+        values.put(KEY_IME, ime);
+        values.put(KEY_PREZIME, prezime);
+        // Inserting Row
+
+        long id = db.insert(TABLE_NASTAVNICI, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New nastavnici inserted into sqlite: " + id);
+    }
+
+    public void addRaz_pred_nast(Integer id_razreda, Integer id_nastavnika, Integer redni_br_upisa, String datum_od, String datum_do) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_RAZREDA, id_razreda);
+        values.put(KEY_ID_NASTAVNIKA, id_nastavnika);
+        values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
+        values.put(KEY_ID_DATUM_DO, datum_od);
+        values.put(KEY_ID_DATUM_DO, datum_do);
+        // Inserting Row
+
+        long id = db.insert(TABLE_RAZ_PRED_NAST, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New raz_pred_nast inserted into sqlite: " + id);
+    }
+
+    public void addOcjene(Integer redni_broj_ocjene, Integer id_ucenika, Integer id_rubrike, Integer redni_br_upisa, Integer ocjena, String datum_ocjene, String komentar) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_REDNI_BR_OCJENE, redni_broj_ocjene);
+        values.put(KEY_ID_UCENIKA, id_ucenika);
+        values.put(KEY_ID_RUBRIKE, id_rubrike);
+        values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
+        values.put(KEY_OCJENA, ocjena);
+        values.put(KEY_DATUM_OCJENE, datum_ocjene);
+        values.put(KEY_KOMENTAR, komentar);
+        // Inserting Row
+
+        long id = db.insert(TABLE_OCJENE, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New ocjene inserted into sqlite: " + id);
+    }
+
+    public void addRubrike(Integer id_rubrike, String naziv_rubrike) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_RUBRIKE, id_rubrike);
+        values.put(KEY_NAZIV_RUBRIKE, naziv_rubrike);
+        // Inserting Row
+
+        long id = db.insert(TABLE_RUBRIKE, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New rubrike inserted into sqlite: " + id);
+    }
+
+    public void addKomentar(Integer id_nastavnika, Integer id_ucenika, Integer redni_br_upisa, String datum, String komentar) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_NASTAVNIKA, id_nastavnika);
+        values.put(KEY_ID_UCENIKA, id_ucenika);
+        values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
+        values.put(KEY_DATUM_KOMENTARA, datum);
+        values.put(KEY_KOMENTAR, komentar);
+        // Inserting Row
+
+        long id = db.insert(TABLE_KOMENTAR, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New rubrike inserted into sqlite: " + id);
+    }
+
 
     /**
      * Getting user data from database
@@ -286,6 +400,14 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         // Delete All Rows
         db.delete(TABLE_UCENICI, null, null);
         db.delete(TABLE_UPIS, null, null);
+        db.delete(TABLE_RAZREDI, null, null);
+        db.delete(TABLE_UPISANI_PREDMETI, null, null);
+        db.delete(TABLE_PREDMETI, null, null);
+        db.delete(TABLE_NASTAVNICI, null, null);
+        db.delete(TABLE_RAZ_PRED_NAST, null, null);
+        db.delete(TABLE_OCJENE, null, null);
+        db.delete(TABLE_RUBRIKE, null, null);
+        db.delete(TABLE_KOMENTAR, null, null);
         db.close();
 
         Log.d(TAG, "Deleted all user info from sqlite");
