@@ -152,16 +152,68 @@ public class LoginActivity extends Activity {
                         }*/
 
                         JSONObject razredi = jObj.getJSONObject("razredi");
-                        Integer id_razreda=razredi.getInt("id_razreda");
+                        Integer raz_id_razreda=razredi.getInt("id_razreda");
                         Integer godina=razredi.getInt("godina");
-                        Integer razred=razredi.getInt("razred");
+                        String razred=razredi.getString("razred");
                         String godina_upisa=razredi.getString("godina_upisa");
+
+                        JSONObject upisani_predmeti = jObj.getJSONObject("upisani_predmeti");
+                        Integer redni_br_upisa=upisani_predmeti.getInt("redni_br_upisa");
+                        Integer upisani_id_upisa=upisani_predmeti.getInt("id_upisa");
+                        Integer upisani_id_predmeta=upisani_predmeti.getInt("id_predmeta");
+                        String upisani_datum_upisa=upisani_predmeti.getString("datum_upisa");
+                        Integer zavrsna_ocjena_predmeta=upisani_predmeti.getInt("zavrsna_ocjena_predmeta");
+                        String datum_zavrsne_ocjene=upisani_predmeti.getString("datum_zavrsne_ocjene");
+
+                        JSONObject predmeti = jObj.getJSONObject("predmeti");
+                        Integer id_predmeta=predmeti.getInt("id_predmeta");
+                        String naziv_predmeta=predmeti.getString("naziv_predmeta");
+
+                        JSONObject nastavnici = jObj.getJSONObject("nastavnici");
+                        Integer id_nastavnika=nastavnici.getInt("id_nastavnika");
+                        Integer oib_nastavnika=nastavnici.getInt("oib_nastavnika");
+                        String nastavnici_ime=nastavnici.getString("ime");
+                        String nastavnici_prezime=nastavnici.getString("prezime");
+
+                        JSONObject raz_pred_nast = jObj.getJSONObject("raz_pred_nast");
+                        Integer raz_pred_nast_id_razreda=raz_pred_nast.getInt("id_razreda");
+                        Integer raz_pred_nast_id_nastavnika=raz_pred_nast.getInt("id_nastavnika");
+                        Integer raz_pred_nast_redni_br_upisa=raz_pred_nast.getInt("redni_br_upisa");
+                        String datum_od=raz_pred_nast.getString("datum_od");
+                        String datum_do=raz_pred_nast.getString("datum_do");
+
+                        JSONObject ocjene = jObj.getJSONObject("ocjene");
+                        Integer redni_broj_ocjene=ocjene.getInt("redni_broj_ocjene");
+                        Integer ocjene_id_ucenika=ocjene.getInt("id_ucenika");
+                        Integer id_rubrike=ocjene.getInt("id_rubrike");
+                        Integer ocjene_redni_br_upisa=ocjene.getInt("redni_br_upisa");
+                        Integer ocjena=ocjene.getInt("ocjena");
+                        String datum_ocjene=ocjene.getString("datum_ocjene");
+                        String ocjene_komentar=ocjene.getString("komentar");
+
+                        JSONObject rubrike = jObj.getJSONObject("rubrike");
+                        Integer rubrike_id_rubrike=rubrike.getInt("id_rubrike");
+                        String naziv_rubrike=rubrike.getString("naziv_rubrike");
+
+                        JSONObject komentar = jObj.getJSONObject("komentar");
+                        Integer komentar_id_nastavnika=komentar.getInt("id_nastavnika");
+                        Integer komentar_id_ucenika=komentar.getInt("id_ucenika");
+                        Integer redni_br_rubrike=komentar.getInt("redni_br_rubrike");
+                        String datum=komentar.getString("datum");
+                        String komentar_komentar=komentar.getString("komentar");
 
                         // Inserting row in users table
                         //db.addUser(name, surname, email, uid);
                         db.addUser(id_ucenika, ime, prezime, korisnicko_ime);
                         db.addUpis(id_upisa, id_ucenika, id_razreda, datum_upisa);
-                        db.addRazredi(id_razreda, godina, razred, godina_upisa);
+                        db.addRazredi(raz_id_razreda, godina, razred, godina_upisa);
+                        db.addUpisaniPredmeti(redni_br_upisa, upisani_id_upisa, upisani_id_predmeta, upisani_datum_upisa, zavrsna_ocjena_predmeta, datum_zavrsne_ocjene);
+                        db.addPredmeti(id_predmeta, naziv_predmeta);
+                        db.addNastavnici(id_nastavnika, oib_nastavnika, nastavnici_ime, nastavnici_prezime);
+                        db.addRaz_pred_nast(raz_pred_nast_id_razreda, raz_pred_nast_id_nastavnika, raz_pred_nast_redni_br_upisa, datum_od, datum_do);
+                        db.addOcjene(redni_broj_ocjene, ocjene_id_ucenika, id_rubrike, ocjene_redni_br_upisa, ocjena, datum_ocjene, ocjene_komentar);
+                        db.addRubrike(rubrike_id_rubrike, naziv_rubrike);
+                        db.addKomentar(komentar_id_nastavnika, komentar_id_ucenika,redni_br_rubrike, datum, komentar_komentar);
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
