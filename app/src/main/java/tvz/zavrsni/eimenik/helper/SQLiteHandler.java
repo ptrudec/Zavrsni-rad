@@ -3,8 +3,10 @@ package tvz.zavrsni.eimenik.helper;
 /**
  * Created by Pero on 22.6.2015..
  */
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -231,7 +233,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New razredi inserted into sqlite: " + id);
     }
 
-    public void addUpisaniPredmeti(Integer redni_br_upisa, Integer id_upisa, Integer id_predmeta, String datum_upisa, Integer zavrsna_ocjena_prdmet, String datum_zavrsne_ocjene) {
+    public void addUpisaniPredmeti(Integer redni_br_upisa, Integer id_upisa, Integer id_predmeta, String datum_upisa, Integer zavrsna_ocjena_predmeta, String datum_zavrsne_ocjene) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -239,7 +241,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_ID_UPISA, id_upisa);
         values.put(KEY_ID_PREDMETA, id_predmeta);
         values.put(KEY_DATUM_UPISA, datum_upisa);
-        values.put(KEY_ZAVRSNA_OCJENA_PREDMETA, zavrsna_ocjena_prdmet);
+        values.put(KEY_ZAVRSNA_OCJENA_PREDMETA, zavrsna_ocjena_predmeta);
         values.put(KEY_DATUM_ZAVRSNE_OCJENE, datum_zavrsne_ocjene);
         // Inserting Row
         long id = db.insert(TABLE_UPISANI_PREDMETI, null, values);
@@ -375,6 +377,35 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Fetching user from Sqlite: " + user.toString());
 
         return user;
+    }
+
+    public List<Ocjene> getAllOcjene() {
+        List<Ocjene> ocjene = new ArrayList<Ocjene>();
+        String selectQuery = "SELECT " + KEY_OCJENA + ", " + KEY_DATUM_OCJENE + ", " + KEY_NAZIV_RUBRIKE + ", " + KEY_NAZIV_PREDMETA +  " FROM " + TABLE_OCJENE + "JOIN "
+                + TABLE_RUBRIKE + " ON " + TABLE_OCJENE + "." + KEY_ID_RUBRIKE + "=" + TABLE_RUBRIKE + "." + KEY_ID_RUBRIKE + " JOIN " + TABLE_UPISANI_PREDMETI
+                + " ON " + TABLE_OCJENE + "." + KEY_REDNI_BR_UPISA + "=" + TABLE_UPISANI_PREDMETI + "." + KEY_REDNI_BR_UPISA + " JOIN " + TABLE_PREDMETI
+                + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA;
+
+        Log.e(TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Ocjene oc = new Ocjene();
+                oc.setOcjena(c.getInt((c.getColumnIndex(KEY_OCJENA))));
+                oc.setDatumOcjene((c.getString(c.getColumnIndex(KEY_DATUM_OCJENE))));
+                oc.setNazivRubrike(c.getString(c.getColumnIndex(KEY_NAZIV_RUBRIKE)));
+                oc.SetPredmet(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
+
+                // adding to ocjene list
+                ocjene.add(oc);
+            } while (c.moveToNext());
+        }
+
+        return ocjene;
     }
 
     /**
