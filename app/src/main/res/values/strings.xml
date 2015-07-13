@@ -13,4 +13,25 @@
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
 
+
+    <string name="action_settings">Postavke</string>
+    <string name="log_out_settings">Log out</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <string-array name="nav_drawer_items">
+        <item >Naslovna</item>
+        <item >Ocjene</item>
+        <item >Komentari</item>
+
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+
+    </array>
+
+    <string name="desc_list_item_icon">Item Icon</string>
 </resources>
