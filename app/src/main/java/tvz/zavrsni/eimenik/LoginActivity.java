@@ -162,7 +162,8 @@ public class LoginActivity extends Activity {
                         Integer upisani_id_upisa=upisani_predmeti.getInt("id_upisa");
                         Integer upisani_id_predmeta=upisani_predmeti.getInt("id_predmeta");
                         String upisani_datum_upisa=upisani_predmeti.getString("datum_upisa");
-                        Integer zavrsna_ocjena_predmeta=upisani_predmeti.getInt("zavrsna_ocjena_predmeta");
+                        /*Integer zavrsna_ocjena_predmeta=upisani_predmeti.getInt("zavrsna_ocjena_predmeta");*/
+                        Integer zavrsna_ocjena_predmeta=0;/*upisani_predmeti.getInt("zavrsna_ocjena_predmeta");*/
                         String datum_zavrsne_ocjene=upisani_predmeti.getString("datum_zavrsne_ocjene");
 
                         JSONObject predmeti = jObj.getJSONObject("predmeti");
@@ -198,7 +199,7 @@ public class LoginActivity extends Activity {
                         JSONObject komentar = jObj.getJSONObject("komentar");
                         Integer komentar_id_nastavnika=komentar.getInt("id_nastavnika");
                         Integer komentar_id_ucenika=komentar.getInt("id_ucenika");
-                        Integer redni_br_rubrike=komentar.getInt("redni_br_rubrike");
+                        Integer komentar_redni_br_upisa=komentar.getInt("redni_br_upisa");
                         String datum=komentar.getString("datum");
                         String komentar_komentar=komentar.getString("komentar");
 
@@ -213,7 +214,7 @@ public class LoginActivity extends Activity {
                         db.addRaz_pred_nast(raz_pred_nast_id_razreda, raz_pred_nast_id_nastavnika, raz_pred_nast_redni_br_upisa, datum_od, datum_do);
                         db.addOcjene(redni_broj_ocjene, ocjene_id_ucenika, id_rubrike, ocjene_redni_br_upisa, ocjena, datum_ocjene, ocjene_komentar);
                         db.addRubrike(rubrike_id_rubrike, naziv_rubrike);
-                        db.addKomentar(komentar_id_nastavnika, komentar_id_ucenika,redni_br_rubrike, datum, komentar_komentar);
+                        db.addKomentar(komentar_id_nastavnika, komentar_id_ucenika, komentar_redni_br_upisa, datum, komentar_komentar);
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
