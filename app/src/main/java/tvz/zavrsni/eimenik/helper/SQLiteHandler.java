@@ -73,7 +73,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_NAZIV_RUBRIKE="naziv_rubrike";
 
     private static final String TABLE_KOMENTAR="komentar";
+    private static final String KEY_ID_KOMENTARA="id_komentara";
     private static final String KEY_DATUM_KOMENTARA="datum_komentara";
+
 
 
     private static final String CREATE_TABLE_UCENICI = "CREATE TABLE " + TABLE_UCENICI + "("
@@ -128,7 +130,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             + KEY_ID_RUBRIKE + " INTEGER PRIMARY KEY, " + KEY_NAZIV_RUBRIKE + " TEXT" + ")";
 
     private static final String CREATE_TABLE_KOMENTAR = "CREATE TABLE " + TABLE_KOMENTAR + "("
-            + KEY_ID_NASTAVNIKA + " INTEGER, " + KEY_ID_UCENIKA + " INTEGER,"
+            + KEY_ID_KOMENTARA + " INTEGER PRIMARY KEY, " + KEY_ID_NASTAVNIKA + " INTEGER, " + KEY_ID_UCENIKA + " INTEGER,"
             + KEY_REDNI_BR_UPISA + " INTEGER, " + KEY_DATUM_KOMENTARA + " DATETIME,"
             + KEY_KOMENTAR + " TEXT, "
             + " FOREIGN KEY (" + KEY_ID_NASTAVNIKA + ") REFERENCES " + TABLE_NASTAVNICI + "( " + KEY_ID_NASTAVNIKA + "), "
@@ -160,6 +162,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_KOMENTAR);
 
         Log.d(TAG, "Database tables created");
+        Log.d(TAG, CREATE_TABLE_KOMENTAR);
     }
 
     // Upgrading database
@@ -301,16 +304,18 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_REDNI_BR_OCJENE, redni_broj_ocjene);
-        values.put(KEY_ID_UCENIKA, id_ucenika);
-        values.put(KEY_ID_RUBRIKE, id_rubrike);
-        values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
-        values.put(KEY_OCJENA, ocjena);
-        values.put(KEY_DATUM_OCJENE, datum_ocjene);
-        values.put(KEY_KOMENTAR, komentar);
-        // Inserting Row
 
-        long id = db.insert(TABLE_OCJENE, null, values);
+            values.put(KEY_ID_REDNI_BR_OCJENE, redni_broj_ocjene);
+            values.put(KEY_ID_UCENIKA, id_ucenika);
+            values.put(KEY_ID_RUBRIKE, id_rubrike);
+            values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
+            values.put(KEY_OCJENA, ocjena);
+            values.put(KEY_DATUM_OCJENE, datum_ocjene);
+            values.put(KEY_KOMENTAR, komentar);
+            // Inserting Row
+
+            long id= db.insert(TABLE_OCJENE, null, values);
+
         db.close(); // Closing database connection
 
         Log.d(TAG, "New ocjene inserted into sqlite: " + id);
@@ -330,10 +335,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New rubrike inserted into sqlite: " + id);
     }
 
-    public void addKomentar(Integer id_nastavnika, Integer id_ucenika, Integer redni_br_upisa, String datum, String komentar) {
+    public void addKomentar(Integer id_komentara, Integer id_nastavnika, Integer id_ucenika, Integer redni_br_upisa, String datum, String komentar) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_ID_KOMENTARA, id_komentara);
         values.put(KEY_ID_NASTAVNIKA, id_nastavnika);
         values.put(KEY_ID_UCENIKA, id_ucenika);
         values.put(KEY_REDNI_BR_UPISA, redni_br_upisa);
@@ -344,7 +350,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         long id = db.insert(TABLE_KOMENTAR, null, values);
         db.close(); // Closing database connection
 
-        Log.d(TAG, "New rubrike inserted into sqlite: " + id);
+        Log.d(TAG, "New komentar inserted into sqlite: " + id);
     }
 
 
@@ -379,9 +385,39 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return user;
     }
 
+
+    public List<Ocjene> getZadnjeOcjene() {
+        List<Ocjene> ocjene = new ArrayList<Ocjene>();
+        String selectQuery = "SELECT " + KEY_OCJENA + ", " + KEY_DATUM_OCJENE + ", " + KEY_NAZIV_RUBRIKE + ", " + KEY_NAZIV_PREDMETA + "," + KEY_KOMENTAR + " FROM " + TABLE_OCJENE + " JOIN "
+                + TABLE_RUBRIKE + " ON " + TABLE_OCJENE + "." + KEY_ID_RUBRIKE + "=" + TABLE_RUBRIKE + "." + KEY_ID_RUBRIKE + " JOIN " + TABLE_UPISANI_PREDMETI
+                + " ON " + TABLE_OCJENE + "." + KEY_REDNI_BR_UPISA + "=" + TABLE_UPISANI_PREDMETI + "." + KEY_REDNI_BR_UPISA + " JOIN " + TABLE_PREDMETI
+                + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA + " ORDER BY " + KEY_DATUM_OCJENE + " DESC LIMIT 10";
+
+        Log.e(TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Ocjene oc = new Ocjene();
+                oc.setOcjena(c.getInt((c.getColumnIndex(KEY_OCJENA))));
+                oc.setDatumOcjene((c.getString(c.getColumnIndex(KEY_DATUM_OCJENE))));
+                oc.setNazivRubrike(c.getString(c.getColumnIndex(KEY_NAZIV_RUBRIKE)));
+                oc.setPredmet(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
+                oc.setKomentar(c.getString(c.getColumnIndex(KEY_KOMENTAR)));
+
+                // adding to ocjene list
+                ocjene.add(oc);
+            } while (c.moveToNext());
+        }
+
+        return ocjene;
+    }
     public List<Ocjene> getAllOcjene() {
         List<Ocjene> ocjene = new ArrayList<Ocjene>();
-        String selectQuery = "SELECT " + KEY_OCJENA + ", " + KEY_DATUM_OCJENE + ", " + KEY_NAZIV_RUBRIKE + ", " + KEY_NAZIV_PREDMETA +  " FROM " + TABLE_OCJENE + "JOIN "
+        String selectQuery = "SELECT " + KEY_OCJENA + ", " + KEY_DATUM_OCJENE + ", " + KEY_NAZIV_RUBRIKE + ", " + KEY_NAZIV_PREDMETA + "," + KEY_KOMENTAR +  " FROM " + TABLE_OCJENE + " JOIN "
                 + TABLE_RUBRIKE + " ON " + TABLE_OCJENE + "." + KEY_ID_RUBRIKE + "=" + TABLE_RUBRIKE + "." + KEY_ID_RUBRIKE + " JOIN " + TABLE_UPISANI_PREDMETI
                 + " ON " + TABLE_OCJENE + "." + KEY_REDNI_BR_UPISA + "=" + TABLE_UPISANI_PREDMETI + "." + KEY_REDNI_BR_UPISA + " JOIN " + TABLE_PREDMETI
                 + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA;
@@ -398,7 +434,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 oc.setOcjena(c.getInt((c.getColumnIndex(KEY_OCJENA))));
                 oc.setDatumOcjene((c.getString(c.getColumnIndex(KEY_DATUM_OCJENE))));
                 oc.setNazivRubrike(c.getString(c.getColumnIndex(KEY_NAZIV_RUBRIKE)));
-                oc.SetPredmet(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
+                oc.setPredmet(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
+                oc.setKomentar(c.getString(c.getColumnIndex(KEY_KOMENTAR)));
 
                 // adding to ocjene list
                 ocjene.add(oc);
@@ -406,6 +443,33 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         }
 
         return ocjene;
+    }
+
+    public List<Komentari> getAllKomentari() {
+        List<Komentari> komentari = new ArrayList<Komentari>();
+        String selectQuery = "SELECT " + KEY_DATUM_KOMENTARA + ", " + KEY_KOMENTAR + ", " + KEY_NAZIV_PREDMETA +  " FROM " + TABLE_KOMENTAR + " JOIN "
+                + TABLE_UPISANI_PREDMETI + " ON " + TABLE_KOMENTAR + "." + KEY_REDNI_BR_UPISA + "=" + TABLE_UPISANI_PREDMETI + "." + KEY_REDNI_BR_UPISA + " JOIN " + TABLE_PREDMETI
+                + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA + " ORDER BY " + KEY_DATUM_KOMENTARA + " DESC";
+
+        Log.e(TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Komentari kom = new Komentari();
+                kom.setDatumKomentara((c.getString(c.getColumnIndex(KEY_DATUM_KOMENTARA))));
+                kom.setNaziv_predmeta(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
+                kom.setKomentarKomentar(c.getString(c.getColumnIndex(KEY_KOMENTAR)));
+
+                // adding to ocjene list
+                komentari.add(kom);
+            } while (c.moveToNext());
+        }
+
+        return komentari;
     }
 
     /**

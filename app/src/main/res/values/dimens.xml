@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title">17dp</dimen>
-    <dimen name="rating">15dip</dimen>
-    <dimen name="genre">13dip</dimen>
-    <dimen name="year">12dip</dimen>
+    <dimen name="naziv_predmeta">20dp</dimen>
+    <dimen name="naziv_rubrike">15dip</dimen>
+    <dimen name="komentar_ocjene">13dip</dimen>
+    <dimen name="datum_ocjene">12dip</dimen>
 
 </resources>

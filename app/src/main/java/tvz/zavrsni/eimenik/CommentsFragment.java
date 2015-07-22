@@ -8,8 +8,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import tvz.zavrsni.eimenik.adapter.KomentariListAdapter;
+import tvz.zavrsni.eimenik.helper.Komentari;
+import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 
 public class CommentsFragment extends Fragment {
+    private SQLiteHandler db;
+
+
+    private List<Komentari> komentari=new ArrayList<>();
+    private ListView listView1;
+    private KomentariListAdapter adapter2;
+
 
     public CommentsFragment(){}
 
@@ -17,7 +32,19 @@ public class CommentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        db = new SQLiteHandler(getActivity().getApplicationContext());
+
+        komentari = db.getAllKomentari();
+
+
+
         View rootView = inflater.inflate(R.layout.fragment_comments, container, false);
+
+
+        listView1 = (ListView) rootView.findViewById(R.id.list_komentari);
+        adapter2 = new KomentariListAdapter(CommentsFragment.this.getActivity(), komentari);
+        listView1.setAdapter(adapter2);
+        //adapter2.notifyDataSetChanged();
 
         return rootView;
     }

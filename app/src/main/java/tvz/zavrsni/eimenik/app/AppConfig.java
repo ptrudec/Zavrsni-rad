@@ -5,7 +5,7 @@ package tvz.zavrsni.eimenik.app;
  */
 public class AppConfig {
     // Server user login url
-    public static String URL_LOGIN = "http://192.168.1.101/eimenik/";
+    public static String URL_LOGIN = "http://10.0.2.2:8000/eimenik/";
 
     // Server user register url
     public static String URL_REGISTER = "http://192.168.1.101/eimenik/";

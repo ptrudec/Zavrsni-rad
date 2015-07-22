@@ -3,19 +3,15 @@ package tvz.zavrsni.eimenik;
 /**
  * Created by Pero on 22.6.2015..
  */
+import tvz.zavrsni.eimenik.adapter.OcjeneListAdapter;
 import tvz.zavrsni.eimenik.helper.SessionManager;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
+import tvz.zavrsni.eimenik.helper.Ocjene;
 
-import java.util.HashMap;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 /*
 public class MainActivity extends Activity {
@@ -94,19 +90,17 @@ import  tvz.zavrsni.eimenik.adapter.NavDrawerListAdapter;
 import  tvz.zavrsni.eimenik.model.NavDrawerItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -132,6 +126,12 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
     private SQLiteHandler db;
     private SessionManager session;
 
+    private List<Ocjene> ocjene=new ArrayList<>();
+    private ListView listView;
+    private OcjeneListAdapter adapter1;
+
+
+
     private void logoutUser() {
         session.setLogin(false);
 
@@ -147,6 +147,9 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         db = new SQLiteHandler(getApplicationContext());
 
@@ -196,6 +199,7 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.app_name,R.string.app_name
                 //R.drawable.ic_drawer, //nav menu toggle icon
                 //R.string.app_name, // nav drawer open - description for accessibility
@@ -220,6 +224,14 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
             // on first time display view for first nav item
             displayView(0);
         }
+
+
+
+
+
+
+
+
 
 
     }
@@ -336,7 +348,6 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
 
 
 

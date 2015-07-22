@@ -8,16 +8,18 @@ public class Ocjene {
     String datum_ocjene;
     String naziv_rubrike;
     String predmet;
+    String komentar;
 
     // constructors
     public Ocjene() {
     }
 
-    public Ocjene(int ocjena, String datum_ocjene, String naziv_rubrike, String predmet) {
+    public Ocjene(int ocjena, String datum_ocjene, String naziv_rubrike, String predmet, String komentar) {
         this.ocjena = ocjena;
         this.datum_ocjene = datum_ocjene;
         this.naziv_rubrike = naziv_rubrike;
         this.predmet = predmet;
+        this.komentar = komentar;
     }
 
     // setters
@@ -33,8 +35,11 @@ public class Ocjene {
         this.naziv_rubrike = naziv_rubrike;
     }
 
-    public void SetPredmet (String predmet){
+    public void setPredmet (String predmet){
         this.predmet = predmet;
+    }
+    public void setKomentar(String komentar) {
+        this.komentar = komentar;
     }
 
     // getters
@@ -51,5 +56,8 @@ public class Ocjene {
     }
     public String GetPredmet() {
         return this.predmet;
+    }
+    public String GetKomentar() {
+        return this.komentar;
     }
 }

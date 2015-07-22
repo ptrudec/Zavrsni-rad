@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_ocjene_selector"
+    android:padding="8dp" >
+
+
+    <LinearLayout
+        android:id="@+id/left"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content" android:orientation="vertical">
+    <!--<TextView
+        android:id="@+id/datum_ocjene"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ocjena"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/datum_ocjene"
+        android:textSize="@dimen/datum_ocjene"
+    />
+    <TextView
+        android:id="@+id/vrijeme_ocjene"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datum_ocjene"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/datum_ocjene"
+        android:textSize="@dimen/datum_ocjene"
+        /> -->
+
+        <!-- Ocjena -->
+        <TextView
+            android:id="@+id/ocjena"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <!-- Datum ocjene -->
+        <TextView
+            android:id="@+id/datum_ocjene"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ocjena"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/datum_ocjene"
+            android:textSize="@dimen/datum_ocjene"
+            />
+
+        <!-- Vrijeme ocjene -->
+        <TextView
+            android:id="@+id/vrijeme_ocjene"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/datum_ocjene"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/datum_ocjene"
+            android:textSize="@dimen/datum_ocjene"
+            />
+
+    </LinearLayout>
+
+    <!-- Naziv predmeta -->
+    <TextView
+        android:id="@+id/naziv_predmeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/left"
+        android:layout_toRightOf="@+id/left"
+        android:textSize="@dimen/naziv_predmeta"
+        android:textStyle="bold" />
+
+    <!-- Naziv Rubrike -->
+    <TextView
+        android:id="@+id/naziv_rubrike"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/naziv_predmeta"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/left"
+        android:textSize="@dimen/naziv_rubrike" />
+
+
+    <!-- Komentar ocjene -->
+    <TextView
+        android:id="@+id/komentar_ocjene"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/naziv_rubrike"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/left"
+        android:textColor="@color/komentar_ocjene"
+        android:textSize="@dimen/komentar_ocjene" />
+
+
+
+
+</RelativeLayout>
