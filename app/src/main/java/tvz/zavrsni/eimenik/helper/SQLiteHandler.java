@@ -415,12 +415,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         return ocjene;
     }
-    public List<Ocjene> getAllOcjene() {
+    public List<Ocjene> getAllOcjene(int id) {
         List<Ocjene> ocjene = new ArrayList<Ocjene>();
         String selectQuery = "SELECT " + KEY_OCJENA + ", " + KEY_DATUM_OCJENE + ", " + KEY_NAZIV_RUBRIKE + ", " + KEY_NAZIV_PREDMETA + "," + KEY_KOMENTAR +  " FROM " + TABLE_OCJENE + " JOIN "
                 + TABLE_RUBRIKE + " ON " + TABLE_OCJENE + "." + KEY_ID_RUBRIKE + "=" + TABLE_RUBRIKE + "." + KEY_ID_RUBRIKE + " JOIN " + TABLE_UPISANI_PREDMETI
                 + " ON " + TABLE_OCJENE + "." + KEY_REDNI_BR_UPISA + "=" + TABLE_UPISANI_PREDMETI + "." + KEY_REDNI_BR_UPISA + " JOIN " + TABLE_PREDMETI
-                + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA;
+                + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA + " WHERE " + TABLE_UPISANI_PREDMETI + "." + KEY_REDNI_BR_UPISA + "=" +id;
 
         Log.e(TAG, selectQuery);
 
@@ -443,6 +443,34 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         }
 
         return ocjene;
+    }
+
+    public List<Predmeti> getAllPredmeti() {
+        List<Predmeti> predmeti = new ArrayList<Predmeti>();
+        String selectQuery = "SELECT " + KEY_NAZIV_PREDMETA + ", " + KEY_REDNI_BR_UPISA + " FROM " + TABLE_UPISANI_PREDMETI + " JOIN "
+                + TABLE_PREDMETI + " ON " + TABLE_UPISANI_PREDMETI + "." + KEY_ID_PREDMETA + "=" + TABLE_PREDMETI + "." + KEY_ID_PREDMETA ;
+
+        Log.e(TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Predmeti pr = new Predmeti();
+                //pr.setDatumZavrsneOcjene(c.getString((c.getColumnIndex(KEY_DATUM_ZAVRSNE_OCJENE))));
+                pr.setNazivPredmeta((c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA))));
+                //pr.setZavrsnaOcjena(c.getString(c.getColumnIndex(KEY_ZAVRSNA_OCJENA_PREDMETA)));
+                pr.setRedniBrUpisa(c.getInt(c.getColumnIndex(KEY_REDNI_BR_UPISA)));
+
+
+                // adding to ocjene list
+                predmeti.add(pr);
+            } while (c.moveToNext());
+        }
+
+        return predmeti;
     }
 
     public List<Komentari> getAllKomentari() {

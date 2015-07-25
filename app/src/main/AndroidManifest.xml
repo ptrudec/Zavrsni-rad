@@ -26,6 +26,12 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".GradesActivity"
+            android:label="@string/grades_activity" >
+
+        </activity>
     </application>
 
 </manifest>

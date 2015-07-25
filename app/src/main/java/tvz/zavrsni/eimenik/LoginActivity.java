@@ -171,8 +171,24 @@ public class LoginActivity extends Activity {
                             Integer upisani_id_upisa=Integer.parseInt(up.getString("id_upisa"));
                             Integer upisani_id_predmeta = Integer.parseInt(up.getString("id_predmeta"));
                             String upisani_datum_upisa=up.getString("datum_upisa");
-                            Integer zavrsna_ocjena_predmeta=0;
-                            String datum_zavrsne_ocjene=up.getString("datum_zavrsne_ocjene");
+                            //Integer zavrsna_ocjena_predmeta=0;
+                            Integer zavrsna_ocjena_predmeta=null;
+                            String datum_zavrsne_ocjene=null;
+
+                            if(up.getString("zavrsna_ocjena_predmeta")=="null") {
+                            }
+                            else {
+                                zavrsna_ocjena_predmeta = Integer.parseInt(up.getString("zavrsna_ocjena_predmeta"));
+                            }
+
+                            if(up.getString("datum_zavrsne_ocjene")=="null") {
+                            }
+                            else {
+                                datum_zavrsne_ocjene = up.getString("datum_zavrsne_ocjene");
+                            }
+
+                            //Integer zavrsna_ocjena_predmeta = Integer.parseInt(up.getString("zavrsna_ocjena_predmeta"));
+                            //String datum_zavrsne_ocjene=up.getString("datum_zavrsne_ocjene");
                             db.addUpisaniPredmeti(redni_br_upisa, upisani_id_upisa, upisani_id_predmeta, upisani_datum_upisa, zavrsna_ocjena_predmeta, datum_zavrsne_ocjene);
                         }
 

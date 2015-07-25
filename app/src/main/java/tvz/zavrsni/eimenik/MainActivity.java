@@ -264,10 +264,10 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_settings:
-            return true;
+                return true;
 
             case R.id.log_out_settings:
-            logoutUser();
+                logoutUser();
 
             default:
                 return super.onOptionsItemSelected(item);

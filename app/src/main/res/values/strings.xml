@@ -5,23 +5,22 @@
     <string name="hint_email">Korisničko ime</string>
     <string name="hint_password">Lozinka</string>
     <string name="hint_name">Fullname</string>
-    <string name="btn_login">LOGIN</string>
+    <string name="btn_login">PRIJAVA</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
-    <string name="welcome">Welcome</string>
-    <string name="btn_logout">LOGOUT</string>
-    <string name="name">Fullname</string>
 
 
     <string name="action_settings">Postavke</string>
-    <string name="log_out_settings">Log out</string>
+    <string name="log_out_settings">Odjava</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
 
+    <string name="grades_activity">Ocjene</string>
+
     <string-array name="nav_drawer_items">
         <item >Naslovna</item>
-        <item >Ocjene</item>
+        <item >Predmeti</item>
         <item >Komentari</item>
 
     </string-array>

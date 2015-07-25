@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_ocjene_selector"
+    android:padding="10dp">
+
+   <!-- <LinearLayout
+        android:id="@+id/left_predmeti"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content" android:orientation="vertical">-->
+
+
+        <!-- Naziv predmeta -->
+        <TextView
+            android:id="@+id/naziv_predmeta_predmeta"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/naziv_predmeta2"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentTop="false" />
+    <!--<LinearLayout
+        android:id="@+id/lefty"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content" android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/zavrsna_ocjena_predmeta_text"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/naziv_predmeta_predmeta"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="Zaključna ocjena" />
+-->
+        <!--<TextView
+            android:id="@+id/zavrsna_ocjena_predmeta"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_toRightOf="@+id/zavrsna_ocjena_predmeta_text"
+            android:textSize="15dp"
+            android:textStyle="bold" />-->
+        <!--</LinearLayout>
+
+    </LinearLayout>
+        <TextView
+            android:id="@+id/text_zavrsne_ocjene"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/left_predmeti"
+            android:textColor="@color/datum_ocjene"
+            android:textSize="@dimen/text_zavrsne_ocjene"
+            android:text="Datum zaključivanja" />-->
+
+        <!-- Datum ocjene -->
+      <!--  <TextView
+            android:id="@+id/datum_zavrsne_ocjene"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/left_predmeti"
+            android:layout_below="@id/text_zavrsne_ocjene"
+            android:textColor="@color/datum_ocjene"
+            android:textSize="@dimen/datum_ocjene"
+            /> -->
+
+        <!-- Vrijeme ocjene -->
+      <!--  <TextView
+            android:id="@+id/vrijeme_zavrsne_ocjene"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/left_predmeti"
+            android:layout_below="@id/datum_zavrsne_ocjene"
+            android:textColor="@color/datum_ocjene"
+            android:textSize="@dimen/datum_ocjene"
+            />-->
+
+
+    </RelativeLayout>

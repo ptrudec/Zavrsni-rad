@@ -39,12 +39,12 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        listView = (ListView) rootView.findViewById(R.id.list);
+        listView = (ListView) rootView.findViewById(R.id.list_posljednje_ocjene);
         adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
         listView.setAdapter(adapter1);
-        //adapter1.notifyDataSetChanged();
+        adapter1.notifyDataSetChanged();
 
-        //db.close();
+        db.close();
 
         return rootView;
     }

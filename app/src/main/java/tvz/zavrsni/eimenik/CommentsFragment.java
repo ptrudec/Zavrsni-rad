@@ -22,7 +22,7 @@ public class CommentsFragment extends Fragment {
 
 
     private List<Komentari> komentari=new ArrayList<>();
-    private ListView listView1;
+    private ListView listView2;
     private KomentariListAdapter adapter2;
 
 
@@ -41,10 +41,10 @@ public class CommentsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_comments, container, false);
 
 
-        listView1 = (ListView) rootView.findViewById(R.id.list_komentari);
+        listView2 = (ListView) rootView.findViewById(R.id.list_komentari);
         adapter2 = new KomentariListAdapter(CommentsFragment.this.getActivity(), komentari);
-        listView1.setAdapter(adapter2);
-        //adapter2.notifyDataSetChanged();
+        listView2.setAdapter(adapter2);
+        adapter2.notifyDataSetChanged();
 
         return rootView;
     }

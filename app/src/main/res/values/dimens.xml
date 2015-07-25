@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="naziv_predmeta">20dp</dimen>
+    <dimen name="naziv_predmeta2">25dp</dimen>
     <dimen name="naziv_rubrike">15dip</dimen>
     <dimen name="komentar_ocjene">13dip</dimen>
     <dimen name="datum_ocjene">12dip</dimen>
+    <dimen name="text_zavrsne_ocjene">10dip</dimen>
 
 </resources>
