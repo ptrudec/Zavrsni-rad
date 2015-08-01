@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik.helper;
 
-/**
- * Created by Pero on 12.7.2015..
- */
 public class Ocjene {
     int ocjena;
     String datum_ocjene;

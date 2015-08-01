@@ -3,7 +3,6 @@ package tvz.zavrsni.eimenik.adapter;
 import tvz.zavrsni.eimenik.helper.Komentari;
 import tvz.zavrsni.eimenik.R;
 
-
 import android.widget.BaseAdapter;
 
 import java.text.ParseException;
@@ -17,9 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-/**
- * Created by Pero on 22.7.2015..
- */
+
 public class KomentariListAdapter extends BaseAdapter {
 
     private static final String TAG = OcjeneListAdapter.class.getSimpleName();
@@ -79,7 +76,6 @@ public class KomentariListAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        //datum_ocjene.setText(String.valueOf(m.GetDatumOocjene()));
         datum_komentara.setText(datum);
         vrijeme_komentara.setText(vrijeme);
         return convertView;

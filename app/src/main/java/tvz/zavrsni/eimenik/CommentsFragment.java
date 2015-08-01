@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik;
 
-/**
- * Created by Pero on 12.7.2015..
- */
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;

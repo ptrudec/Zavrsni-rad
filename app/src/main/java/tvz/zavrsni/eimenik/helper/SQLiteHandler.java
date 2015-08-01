@@ -1,10 +1,6 @@
 package tvz.zavrsni.eimenik.helper;
 
-/**
- * Created by Pero on 22.6.2015..
- */
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -365,17 +361,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         cursor.moveToFirst();
-        // br = cursor.getCount();
         if (cursor.getCount() > 0) {
-            //while (br-10 > br) {
                 user.put("ime", cursor.getString(1));
                 user.put("prezime", cursor.getString(2));
                 user.put("korisnicko_ime", cursor.getString(3));
 
-                //user.put("uid", cursor.getString(4));
-
-                //br --;
-           //}
         }
         cursor.close();
         db.close();
@@ -459,9 +449,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 Predmeti pr = new Predmeti();
-                //pr.setDatumZavrsneOcjene(c.getString((c.getColumnIndex(KEY_DATUM_ZAVRSNE_OCJENE))));
                 pr.setNazivPredmeta((c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA))));
-                //pr.setZavrsnaOcjena(c.getString(c.getColumnIndex(KEY_ZAVRSNA_OCJENA_PREDMETA)));
                 pr.setRedniBrUpisa(c.getInt(c.getColumnIndex(KEY_REDNI_BR_UPISA)));
 
 

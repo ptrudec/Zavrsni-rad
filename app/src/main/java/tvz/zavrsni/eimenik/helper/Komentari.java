@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik.helper;
 
-/**
- * Created by Pero on 22.7.2015..
- */
 public class Komentari {
     String datum_komentara;
     String naziv_predmeta;

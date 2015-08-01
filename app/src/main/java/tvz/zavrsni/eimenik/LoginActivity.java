@@ -139,8 +139,6 @@ public class LoginActivity extends Activity {
                         // Create login session
                         session.setLogin(true);
 
-                       // String uid = jObj.getString("uid");
-
                         JSONObject user = jObj.getJSONObject("user");
                         String ime = user.getString("ime");
                         String prezime = user.getString("prezime");
@@ -151,13 +149,6 @@ public class LoginActivity extends Activity {
                         Integer id_upisa=upis.getInt("id_upisa");
                         Integer id_razreda = upis.getInt("id_razreda");
                         String datum_upisa = upis.getString("datum_upisa");
-                        /*SimpleDateFormat dupisa = new SimpleDateFormat("yyyy-MM-dd");
-                        Date datum_u = null;
-                        try {
-                            datum_u = dupisa.parse(datum_upisa);
-                        }catch(ParseException e){
-                            e.printStackTrace();
-                        }*/
 
                         JSONObject razredi = jObj.getJSONObject("razredi");
                         Integer raz_id_razreda=razredi.getInt("id_razreda");
@@ -172,7 +163,6 @@ public class LoginActivity extends Activity {
                             Integer upisani_id_upisa=Integer.parseInt(up.getString("id_upisa"));
                             Integer upisani_id_predmeta = Integer.parseInt(up.getString("id_predmeta"));
                             String upisani_datum_upisa=up.getString("datum_upisa");
-                            //Integer zavrsna_ocjena_predmeta=0;
                             Integer zavrsna_ocjena_predmeta=null;
                             String datum_zavrsne_ocjene=null;
 
@@ -187,9 +177,6 @@ public class LoginActivity extends Activity {
                             else {
                                 datum_zavrsne_ocjene = up.getString("datum_zavrsne_ocjene");
                             }
-
-                            //Integer zavrsna_ocjena_predmeta = Integer.parseInt(up.getString("zavrsna_ocjena_predmeta"));
-                            //String datum_zavrsne_ocjene=up.getString("datum_zavrsne_ocjene");
                             db.addUpisaniPredmeti(redni_br_upisa, upisani_id_upisa, upisani_id_predmeta, upisani_datum_upisa, zavrsna_ocjena_predmeta, datum_zavrsne_ocjene);
                         }
 
@@ -200,20 +187,6 @@ public class LoginActivity extends Activity {
                             String naziv_predmeta = pr.getString("naziv_predmeta");
                             db.addPredmeti(id_predmeta, naziv_predmeta);
                         }
-/*
-                        JSONObject upisani_predmeti = jObj.getJSONObject("upisani_predmeti");
-                        Integer redni_br_upisa=upisani_predmeti.getInt("redni_br_upisa");
-                        Integer upisani_id_upisa=upisani_predmeti.getInt("id_upisa");
-                        Integer upisani_id_predmeta = upisani_predmeti.getInt("id_predmeta");
-                        String upisani_datum_upisa=upisani_predmeti.getString("datum_upisa");
-                        /*Integer zavrsna_ocjena_predmeta=upisani_predmeti.getInt("zavrsna_ocjena_predmeta");*/
-                       /* Integer zavrsna_ocjena_predmeta=0;/*upisani_predmeti.getInt("zavrsna_ocjena_predmeta");*/
-                      /*  String datum_zavrsne_ocjene=upisani_predmeti.getString("datum_zavrsne_ocjene");*/
-
-                        /*
-                        JSONObject predmeti = jObj.getJSONObject("predmeti");
-                        Integer id_predmeta = predmeti.getInt("id_predmeta");
-                        String naziv_predmeta = predmeti.getString("naziv_predmeta");*/
 
                         JSONObject nastavnici = jObj.getJSONObject("nastavnici");
                         Integer id_nastavnika = nastavnici.getInt("id_nastavnika");
@@ -228,16 +201,6 @@ public class LoginActivity extends Activity {
                         String datum_od = raz_pred_nast.getString("datum_od");
                         String datum_do=raz_pred_nast.getString("datum_do");
 
-
-                        //JSONObject ocjene = jObj.getJSONObject("ocjene");
-                        //JSONObject ocjene= new JSONObject("ocjene");
-                        /*redni_broj_ocjene=ocjene.getInt("redni_broj_ocjene");
-                        Integer ocjene_id_ucenika=ocjene.getInt("id_ucenika");
-                        Integer id_rubrike=ocjene.getInt("id_rubrike");
-                        Integer ocjene_redni_br_upisa=ocjene.getInt("redni_br_upisa");
-                        Integer ocjena=ocjene.getInt("ocjena");
-                        String datum_ocjene=ocjene.getString("datum_ocjene");
-                        String ocjene_komentar=ocjene.getString("komentar");*/
 
                         ocj = jObj.getJSONArray("ocjene");
 
@@ -254,13 +217,6 @@ public class LoginActivity extends Activity {
 
                         }
 
-
-                        /*
-                        JSONObject rubrike = jObj.getJSONObject("rubrike");
-                        Integer rubrike_id_rubrike=rubrike.getInt("id_rubrike");
-                        String naziv_rubrike=rubrike.getString("naziv_rubrike");
-                        */
-
                         rubrike = jObj.getJSONArray("rubrike");
                         for(int i=0; i<rubrike.length();i++){
                             JSONObject rub=rubrike.getJSONObject(i);
@@ -269,16 +225,6 @@ public class LoginActivity extends Activity {
                             db.addRubrike(rubrike_id_rubrike, naziv_rubrike);
 
                         }
-
-                        /*
-                        JSONObject komentar = jObj.getJSONObject("komentar");
-                        Integer komentar_id_nastavnika=komentar.getInt("id_nastavnika");
-                        Integer komentar_id_ucenika=komentar.getInt("id_ucenika");
-                        Integer komentar_redni_br_upisa=komentar.getInt("redni_br_upisa");
-                        String datum=komentar.getString("datum");
-                        String komentar_komentar=komentar.getString("komentar");
-
-                        */
 
                         komentar = jObj.getJSONArray("komentar");
                         for(int i=0; i<komentar.length();i++){
@@ -293,7 +239,6 @@ public class LoginActivity extends Activity {
                         }
 
                         // Inserting row in users table
-                        //db.addUser(name, surname, email, uid);
                         db.addUser(id_ucenika, ime, prezime, korisnicko_ime);
                         db.addUpis(id_upisa, id_ucenika, id_razreda, datum_upisa);
                         db.addRazredi(raz_id_razreda, godina, razred, godina_upisa);

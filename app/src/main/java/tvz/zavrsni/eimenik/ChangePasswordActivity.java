@@ -1,6 +1,5 @@
 package tvz.zavrsni.eimenik;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,9 +27,6 @@ import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 import tvz.zavrsni.eimenik.helper.SessionManager;
 
-/**
- * Created by Pero on 29.7.2015..
- */
 public class ChangePasswordActivity extends AppCompatActivity {
 
     private static final String TAG = ChangePasswordActivity.class.getSimpleName();

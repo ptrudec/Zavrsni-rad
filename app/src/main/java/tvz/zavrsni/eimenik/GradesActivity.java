@@ -1,9 +1,5 @@
 package tvz.zavrsni.eimenik;
 
-/**
- * Created by Pero on 25.7.2015..
- */
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -47,15 +43,8 @@ public class GradesActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         var=bundle.getInt("var_upis");
 
-
-
-        //db = new SQLiteHandler(this.getApplicationContext());
-
         db = new SQLiteHandler(this.getApplicationContext());
         ocjene = db.getAllOcjene(var);
-
-
-
 
         listView4 = (ListView) findViewById(R.id.list_ocj);
         adapter4 = new OcjeneListAdapter(this, ocjene);

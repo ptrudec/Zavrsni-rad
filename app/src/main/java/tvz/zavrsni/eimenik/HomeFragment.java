@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik;
 
-/**
- * Created by Pero on 12.7.2015..
- */
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -62,11 +59,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                              Bundle savedInstanceState) {
 
         db = new SQLiteHandler(getActivity().getApplicationContext());
-        ocjene = db.getZadnjeOcjene();
+        //ocjene = db.getZadnjeOcjene();
+        ocjene.addAll(db.getZadnjeOcjene());
         Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
-
-
-
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -99,14 +94,16 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         db = new SQLiteHandler(getActivity().getApplicationContext());
         fetchGrades();
-        //ocjene.addAll(db.getZadnjeOcjene());
+        ocjene.clear();
+        ocjene.addAll(db.getZadnjeOcjene());
 
         //ocjene=db.getZadnjeOcjene();
         //Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
         //
-        //listView.setAdapter(adapter1);
+        adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
+        listView.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
 
-        //adapter1.notifyDataSetInvalidated();
 
         Toast.makeText(getActivity().getApplicationContext(),
                 "Ocjene ažurirane", Toast.LENGTH_LONG).show();
@@ -185,9 +182,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 param.put("datum",var_dat);
                 param.put("id_var",var_id);
 
-                //params.put("datum", datum);
-                //params.put("id_var", Integer.toString(id_var));
-                //params.put("id_var", id_var);
                 Log.d(TAG, "Update Response: " + param.toString());
                 return param;
             }

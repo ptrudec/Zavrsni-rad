@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik.adapter;
 
-/**
- * Created by Pero on 12.7.2015..
- */
 import tvz.zavrsni.eimenik.R;
 import tvz.zavrsni.eimenik.model.NavDrawerItem;
 

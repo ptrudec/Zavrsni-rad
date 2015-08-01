@@ -3,7 +3,6 @@ package tvz.zavrsni.eimenik.adapter;
 import tvz.zavrsni.eimenik.helper.Ocjene;
 import tvz.zavrsni.eimenik.R;
 
-
 import android.widget.BaseAdapter;
 
 import java.text.ParseException;
@@ -18,9 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**
- * Created by Pero on 15.7.2015..
- */
+
 public class OcjeneListAdapter extends BaseAdapter {
     private static final String TAG =OcjeneListAdapter.class.getSimpleName();
     private Activity activity;
@@ -84,13 +81,11 @@ public class OcjeneListAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        //datum_ocjene.setText(String.valueOf(m.GetDatumOocjene()));
         datum_ocjene.setText(datum);
         vrijeme_ocjene.setText(vrijeme);
         komentar_ocjene.setText(String.valueOf(m.GetKomentar()));
         return convertView;
 
-        // getting movie data for the row
     }
 
 

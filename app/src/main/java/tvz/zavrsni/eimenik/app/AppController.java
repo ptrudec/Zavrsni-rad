@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik.app;
 
-/**
- * Created by Pero on 22.6.2015..
- */
 import android.app.Application;
 import android.text.TextUtils;
 

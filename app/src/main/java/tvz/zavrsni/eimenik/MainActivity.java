@@ -1,102 +1,19 @@
 package tvz.zavrsni.eimenik;
 
-/**
- * Created by Pero on 22.6.2015..
- */
 import tvz.zavrsni.eimenik.adapter.OcjeneListAdapter;
-import tvz.zavrsni.eimenik.app.AppConfig;
-import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.SessionManager;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 import tvz.zavrsni.eimenik.helper.Ocjene;
+import tvz.zavrsni.eimenik.adapter.NavDrawerListAdapter;
+import tvz.zavrsni.eimenik.model.NavDrawerItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.View;
-
-/*
-public class MainActivity extends Activity {
-
-    private TextView txtName;
-    private TextView txtEmail;
-    private Button btnLogout;
-
-    private SQLiteHandler db;
-    private SessionManager session;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        txtName = (TextView) findViewById(R.id.name);
-        txtEmail = (TextView) findViewById(R.id.email);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-
-        // SqLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-
-        // session manager
-        session = new SessionManager(getApplicationContext());
-
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
-
-        // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
-
-        String ime = user.get("ime");
-        String prezime= user.get("prezime");
-        String korisnicko_ime = user.get("korisnicko_ime");
-        String namesurname=ime+ " " +prezime;
-
-        // Displaying the user details on the screen
-        txtName.setText(namesurname);
-        txtEmail.setText(korisnicko_ime);
-
-        // Logout button click event
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
-    }
-
-    /**
-     * Logging out the user. Will set isLoggedIn flag to false in shared
-     * preferences Clears the user data from sqlite users table
-     * */
-
-/*
-    private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
-
-        // Launching the login activity
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-}
-
-*/
-
-
-
-import  tvz.zavrsni.eimenik.adapter.NavDrawerListAdapter;
-import  tvz.zavrsni.eimenik.model.NavDrawerItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
@@ -108,24 +25,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLayout.OnRefreshListener *//*ActionBarActivity*/ {
     private static final String TAG = RegisterActivity.class.getSimpleName();
-    /*JSONArray ocj = null;
-
-    private String var_dat=null;
-    private int var_id=0;
-*/
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -170,11 +72,6 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         setContentView(R.layout.activity_main);
 
         db = new SQLiteHandler(getApplicationContext());
-/*
-        var_dat=db.getLatestDate();
-        var_id=db.getId();*/
-
-        // session manager
         session = new SessionManager(getApplicationContext());
 
         if (!session.isLoggedIn()) {
@@ -276,18 +173,12 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
-
             case R.id.change_password_settings:
                 Intent in = new Intent(this, ChangePasswordActivity.class);
                 startActivity(in);
                 return true;
-
-
             case R.id.log_out_settings:
                 logoutUser();
-
-
-
             default:
                 return super.onOptionsItemSelected(item);
 

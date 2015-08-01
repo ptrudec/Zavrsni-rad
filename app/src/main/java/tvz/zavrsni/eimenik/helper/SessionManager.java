@@ -1,8 +1,5 @@
 package tvz.zavrsni.eimenik.helper;
 
-/**
- * Created by Pero on 22.6.2015..
- */
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
