@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,11 @@ public class GradesActivity extends AppCompatActivity {
 
         listView4 = (ListView) findViewById(R.id.list_ocj);
         adapter4 = new OcjeneListAdapter(this, ocjene);
+
+        //dodavanje teksta ako nema ocjena
+        TextView emptyText = (TextView)findViewById(android.R.id.empty);
+        listView4.setEmptyView(emptyText);
+
         listView4.setAdapter(adapter4);
 
         db.close();

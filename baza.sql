@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2015 at 09:30 PM
+-- Generation Time: Aug 01, 2015 at 07:35 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -27,23 +27,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `komentar` (
+  `Id_komentara` int(11) NOT NULL AUTO_INCREMENT,
   `Id_nastavnika` int(11) NOT NULL,
   `Id_ucenika` int(11) NOT NULL,
   `Redni_br_upisa` int(11) NOT NULL,
   `Datum` datetime DEFAULT NULL,
   `Komentar` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`Id_nastavnika`,`Id_ucenika`,`Redni_br_upisa`),
+  PRIMARY KEY (`Id_komentara`),
   KEY `Id_ucenika` (`Id_ucenika`),
-  KEY `Upisani_predmetiKomentar` (`Redni_br_upisa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `Upisani_predmetiKomentar` (`Redni_br_upisa`),
+  KEY `Id_nastavnika` (`Id_nastavnika`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `komentar`
 --
 
-INSERT INTO `komentar` (`Id_nastavnika`, `Id_ucenika`, `Redni_br_upisa`, `Datum`, `Komentar`) VALUES
-(1, 7, 3, '2014-09-16 12:17:43', 'Učenik nemiran na satu.'),
-(1, 8, 1, '2015-01-21 10:10:25', 'Učenik gađa druge gumicom.');
+INSERT INTO `komentar` (`Id_komentara`, `Id_nastavnika`, `Id_ucenika`, `Redni_br_upisa`, `Datum`, `Komentar`) VALUES
+(1, 1, 7, 3, '2014-09-16 12:17:43', 'Učenik nemiran na satu.'),
+(2, 1, 7, 2, '2015-01-21 00:00:00', 'Učenik se zabavlja na tabletu.');
 
 -- --------------------------------------------------------
 
@@ -66,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `nastavnici` (
 --
 
 INSERT INTO `nastavnici` (`Id_nastavnika`, `Oib_nastavnika`, `Ime`, `Prezime`) VALUES
-(1, '20635678364', 'Ivo', 'Srna'),
-(2, '56125678364', 'Lovro', 'Šuker');
+(1, '20635678364', 'Ivana', 'Olić'),
+(2, '56125678364', 'Kristina', 'Šuker');
 
 -- --------------------------------------------------------
 
@@ -87,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `ocjene` (
   KEY `Id_rubrike` (`Id_rubrike`),
   KEY `Id_ucenik` (`Id_ucenika`),
   KEY `Redni_br_upisa` (`Redni_br_upisa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `ocjene`
@@ -95,8 +97,13 @@ CREATE TABLE IF NOT EXISTS `ocjene` (
 
 INSERT INTO `ocjene` (`Redni_broj_ocjene`, `Id_ucenika`, `Id_rubrike`, `Redni_br_upisa`, `Ocjena`, `Datum_ocjene`, `Komentar`) VALUES
 (1, 7, 1, 1, 4, '2014-10-07 10:33:40', 'Učenik vlada naučenim znanjem'),
-(2, 7, 1, 1, 1, '2014-11-10 08:38:18', 'Učenik nije spreman'),
-(3, 8, 1, 3, 2, '2014-12-10 08:31:15', 'Vrlo slabo znanje');
+(2, 7, 1, 1, 1, '2014-11-10 08:38:18', 'Učenik nije spreman.'),
+(4, 7, 3, 1, 3, '2015-03-04 09:40:33', 'Učenik razumije osnovne elemente lektire.'),
+(5, 7, 21, 2, 4, '2015-01-05 12:20:22', 'Riješeno 4 od 5 zadataka.'),
+(6, 7, 25, 6, 5, '2015-02-10 10:17:38', 'Kolut naprijed, nazad.'),
+(7, 7, 29, 7, 4, '2014-11-11 10:40:04', 'Učenik vrlo dobro čita.'),
+(8, 7, 5, 4, 2, '2015-07-22 00:00:00', 'sada'),
+(9, 7, 7, 5, 5, '2015-07-29 05:41:00', 'bbbbbbbb');
 
 -- --------------------------------------------------------
 
@@ -108,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `predmeti` (
   `Id_predmeta` int(11) NOT NULL AUTO_INCREMENT,
   `Naziv_predmeta` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`Id_predmeta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `predmeti`
@@ -120,7 +127,8 @@ INSERT INTO `predmeti` (`Id_predmeta`, `Naziv_predmeta`) VALUES
 (3, 'Priroda i društvo'),
 (4, 'Likovna kultura'),
 (5, 'Glazbena kultura'),
-(6, 'Tjelesna i zdravstvena kultura');
+(6, 'Tjelesna i zdravstvena kultura'),
+(7, 'Engleski jezik');
 
 -- --------------------------------------------------------
 
@@ -158,10 +166,9 @@ CREATE TABLE IF NOT EXISTS `raz_pred_nast` (
   `Redni_br_upisa` int(11) DEFAULT NULL,
   `Datum_od` date DEFAULT NULL,
   `Datum_do` date DEFAULT NULL,
-  PRIMARY KEY (`Id_razreda`,`Id_nastavnika`),
-  KEY `Id_nastava` (`Id_nastavnika`),
-  KEY `Raz_pred_nastId_razred` (`Id_razreda`),
-  KEY `Redni_br_upisa` (`Redni_br_upisa`)
+  KEY `Redni_br_upisa` (`Redni_br_upisa`),
+  KEY `Id_razreda` (`Id_razreda`),
+  KEY `Id_nastavnika` (`Id_nastavnika`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -170,7 +177,11 @@ CREATE TABLE IF NOT EXISTS `raz_pred_nast` (
 
 INSERT INTO `raz_pred_nast` (`Id_razreda`, `Id_nastavnika`, `Redni_br_upisa`, `Datum_od`, `Datum_do`) VALUES
 (1, 1, 1, '2014-09-01', '2015-06-17'),
-(2, 1, 3, '2014-09-01', '2015-06-17');
+(1, 1, 2, '2014-09-01', '2015-06-17'),
+(1, 1, 3, '2014-09-01', '2015-06-17'),
+(1, 1, 4, '2014-09-01', '2015-06-17'),
+(1, 1, 5, '2014-09-01', '2015-06-17'),
+(1, 1, 6, '2014-09-01', '2015-06-17');
 
 -- --------------------------------------------------------
 
@@ -180,17 +191,44 @@ INSERT INTO `raz_pred_nast` (`Id_razreda`, `Id_nastavnika`, `Redni_br_upisa`, `D
 
 CREATE TABLE IF NOT EXISTS `rubrike` (
   `Id_rubrike` int(11) NOT NULL AUTO_INCREMENT,
-  `Naziv_rubrike` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `Naziv_rubrike` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`Id_rubrike`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `rubrike`
 --
 
 INSERT INTO `rubrike` (`Id_rubrike`, `Naziv_rubrike`) VALUES
-(1, 'hrvatski jezik'),
-(2, 'zalaganje');
+(1, 'Hrvatski jezik'),
+(2, 'Književnost'),
+(3, 'Lektira'),
+(4, 'Jezično izražavanje i stvaranje - usmeno'),
+(5, 'Jezično izražavanje i stvaranje - pisano'),
+(6, 'Medijska kultura'),
+(7, 'Domaći uradak'),
+(8, 'Zalaganje'),
+(9, 'Crtanje'),
+(10, 'Slikanje'),
+(11, 'Oblikovanje'),
+(12, 'Pjevanje'),
+(13, 'Sviranje'),
+(14, 'Slušanje'),
+(15, 'Razumijevanje - slušanje'),
+(16, 'Razumijevanje - čitanje'),
+(17, 'Istraživanje i stvaranje - usmeno'),
+(18, 'Istraživanje i stvaranje - pismeno'),
+(21, 'Usvojenost, razumijevanje i primjena programskih sadržaja - usmeno'),
+(22, 'Usvojenost, razumijevanje i primjena programskih sadržaja - pismeno'),
+(23, 'Usvojenost, razumijevanje i primjena programskih sadržaja - domaći uradak'),
+(24, 'Praktičan rad'),
+(25, 'Motorička znanja'),
+(26, 'Motorička dostignuća'),
+(27, 'Funkcionalne sposobnosti'),
+(28, 'Razumijevanje - slušanje'),
+(29, 'Razumijevanje - čitanje'),
+(30, 'Istraživanje i stvaranje - usmeno'),
+(31, 'Istraživanje i stvaranje - pisano');
 
 -- --------------------------------------------------------
 
@@ -222,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `ucenici` (
 --
 
 INSERT INTO `ucenici` (`Id_ucenika`, `Oib_ucenika`, `Ime`, `Prezime`, `Ime_oca`, `Datum_rodjenja`, `Adresa_stanovanja`, `Grad_stanovanja`, `Skola`, `Adresa_skole`, `Grad_skole`, `Korisnicko_ime`, `Lozinka`, `Salt`) VALUES
-(7, '19734319463', 'Luka', 'Perišić', 'Ante', '2007-03-21', 'Idrijska 25', 'Zagreb', 'Dr. Ante Starčevića', 'Ulica Svetog Leopolda Mandića 55', 'Zagreb', 'lperisic', 'vgoDUA7pVR3uM0fwwvv3K3Q3NJY0YTJlNmIwNTI2', '4a2e6b0526'),
+(7, '19734319463', 'Luka', 'Perišić', 'Ante', '2007-03-21', 'Idrijska 25', 'Zagreb', 'Dr. Ante Starčevića', 'Ulica Svetog Leopolda Mandića 55', 'Zagreb', 'lperisic', '45ly127JTgbSFpw+/P5gLPw9mh02MGY1ZDg2ZDM0', '60f5d86d34'),
 (8, '2373431947', 'Mario', 'Srna', 'Ivan', '2007-09-01', 'Gojlanska 20', 'Zagreb', 'Dr. Ante Starčevića ', 'Ulica Svetog Leopolda Mandića 55', 'Zagreb', 'msrna', 'SlkbS0GYEalBPThVSM8u88HvTSU3ZjViNmZlY2Vk', '7f5b6feced');
 
 -- --------------------------------------------------------
@@ -246,8 +284,8 @@ CREATE TABLE IF NOT EXISTS `upis` (
 --
 
 INSERT INTO `upis` (`Id_upisa`, `Id_ucenika`, `Id_razreda`, `Datum_upisa`) VALUES
-(1, 7, 1, '2014-06-11'),
-(2, 8, 2, '2014-06-11');
+(1, 7, 1, '2014-09-01'),
+(2, 8, 2, '2014-09-01');
 
 -- --------------------------------------------------------
 
@@ -265,16 +303,20 @@ CREATE TABLE IF NOT EXISTS `upisani_predmeti` (
   PRIMARY KEY (`Redni_br_upisa`),
   KEY `Id_predmeta` (`Id_predmeta`),
   KEY `Id_upis` (`Id_upisa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `upisani_predmeti`
 --
 
 INSERT INTO `upisani_predmeti` (`Redni_br_upisa`, `Id_upisa`, `Id_predmeta`, `Datum_upisa`, `Zavrsna_ocjena_predmeta`, `Datum_zavrsne_ocjene`) VALUES
-(1, 1, 1, '2014-06-11', NULL, NULL),
-(2, 1, 2, '2014-06-11', NULL, NULL),
-(3, 2, 1, '2014-06-11', NULL, NULL);
+(1, 1, 1, '2014-09-01', 4, '2015-06-17 10:00:00'),
+(2, 1, 2, '2014-09-01', NULL, NULL),
+(3, 1, 3, '2014-09-01', NULL, NULL),
+(4, 1, 4, '2014-09-01', NULL, NULL),
+(5, 1, 5, '2014-09-01', NULL, NULL),
+(6, 1, 6, '2014-09-01', NULL, NULL),
+(7, 1, 7, '2014-09-01', NULL, NULL);
 
 --
 -- Constraints for dumped tables
@@ -316,7 +358,7 @@ ALTER TABLE `upis`
 --
 ALTER TABLE `upisani_predmeti`
   ADD CONSTRAINT `PredmetiUpisani_predmeti` FOREIGN KEY (`Id_predmeta`) REFERENCES `predmeti` (`Id_predmeta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `UpisUpisani_predmeti` FOREIGN KEY (`Id_upisa`) REFERENCES `upis` (`Id_upisa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `UpisUpisani_predmeti` FOREIGN KEY (`Id_upisa`) REFERENCES `upis` (`Id_upisa`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

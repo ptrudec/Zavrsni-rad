@@ -515,6 +515,31 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return rowCount;
     }
 
+    public String getLatestDate() {
+        String selectQuery = "SELECT " + KEY_DATUM_OCJENE + " FROM " + TABLE_OCJENE + " ORDER BY " + KEY_DATUM_OCJENE + " DESC LIMIT 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        String date = cursor.getString(cursor.getColumnIndex(KEY_DATUM_OCJENE));
+        db.close();
+        cursor.close();
+
+        // return row count
+        return date;
+    }
+
+    public String getId() {
+        String selectQuery = "SELECT " + KEY_ID_UCENIKA + " FROM " + TABLE_UCENICI;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        String id = cursor.getString(cursor.getColumnIndex(KEY_ID_UCENIKA));
+        db.close();
+        cursor.close();
+
+        // return row count
+        return id;
+    }
     /**
      * Re crate database Delete all tables and create them again
      * */

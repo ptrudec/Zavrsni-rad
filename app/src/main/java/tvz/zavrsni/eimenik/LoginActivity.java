@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -325,10 +326,19 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
+
+                if(error instanceof NoConnectionError){
+                    String error_msg="Nema internet veze, molimo uključite wifi ili mobilne podatke.";
+                    Toast.makeText(getApplicationContext(),
+                            error_msg, Toast.LENGTH_LONG).show();
+                    hideDialog();
+                }
+                else {
+                    Log.e(TAG, "Login Error: " + error.getMessage());
+                    Toast.makeText(getApplicationContext(),
+                            error.getMessage(), Toast.LENGTH_LONG).show();
+                    hideDialog();
+                }
             }
         }) {
 

@@ -32,6 +32,7 @@ public class OcjeneListAdapter extends BaseAdapter {
         this.ocjene = ocjene;
     }
 
+
     public int getCount() {
         return ocjene.size();
     }
@@ -91,5 +92,8 @@ public class OcjeneListAdapter extends BaseAdapter {
 
         // getting movie data for the row
     }
+
+
+
 
 }

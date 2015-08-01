@@ -9,15 +9,23 @@
     <string name="btn_register">REGISTER</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="btn_change">Promijeni lozinku</string>
+    <string name="hint_old_pass">Stara lozinka</string>
+    <string name="hint_new_pass">Nova lozinka</string>
+    <string name="hint_new_pass1">Ponovite novu lozinku</string>
 
 
     <string name="action_settings">Postavke</string>
     <string name="log_out_settings">Odjava</string>
+    <string name="change_password_settings">Promijeni lozinku</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
+    <string name="empty_ocjene">Nema ocjena</string>
+    <string name="empty_komentari">Nema komentara</string>
+
 
     <string name="grades_activity">Ocjene</string>
-
+    <string name="chang_pass_activity">Promjena lozinke</string>
     <string-array name="nav_drawer_items">
         <item >Naslovna</item>
         <item >Predmeti</item>

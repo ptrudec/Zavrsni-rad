@@ -13,4 +13,10 @@
         android:title="@string/log_out_settings"
         android:orderInCategory="100"
         android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/change_password_settings"
+        android:title="@string/change_password_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
 </menu>

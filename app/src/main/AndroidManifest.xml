@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tvz.zavrsni.eimenik">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application android:name="tvz.zavrsni.eimenik.app.AppController"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -28,8 +29,13 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".GradesActivity"
-            android:label="@string/grades_activity" >
+        android:name=".GradesActivity"
+        android:label="@string/grades_activity" >
+
+    </activity>
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/chang_pass_activity" >
 
         </activity>
     </application>

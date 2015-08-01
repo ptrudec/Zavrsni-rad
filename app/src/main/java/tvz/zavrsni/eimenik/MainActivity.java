@@ -4,12 +4,15 @@ package tvz.zavrsni.eimenik;
  * Created by Pero on 22.6.2015..
  */
 import tvz.zavrsni.eimenik.adapter.OcjeneListAdapter;
+import tvz.zavrsni.eimenik.app.AppConfig;
+import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.SessionManager;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 import tvz.zavrsni.eimenik.helper.Ocjene;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.View;
 
@@ -90,7 +93,9 @@ import  tvz.zavrsni.eimenik.adapter.NavDrawerListAdapter;
 import  tvz.zavrsni.eimenik.model.NavDrawerItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -103,8 +108,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLayout.OnRefreshListener *//*ActionBarActivity*/ {
+    private static final String TAG = RegisterActivity.class.getSimpleName();
+    /*JSONArray ocj = null;
+
+    private String var_dat=null;
+    private int var_id=0;
+*/
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -126,10 +147,9 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
     private SQLiteHandler db;
     private SessionManager session;
 
-    private List<Ocjene> ocjene=new ArrayList<>();
+    private List<Ocjene> ocjene = new ArrayList<>();
     private ListView listView;
     private OcjeneListAdapter adapter1;
-
 
 
     private void logoutUser() {
@@ -142,16 +162,17 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         startActivity(intent);
         finish();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         db = new SQLiteHandler(getApplicationContext());
+/*
+        var_dat=db.getLatestDate();
+        var_id=db.getId();*/
 
         // session manager
         session = new SessionManager(getApplicationContext());
@@ -183,8 +204,6 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 
 
-
-
         // Recycle the typed array
         navMenuIcons.recycle();
 
@@ -200,7 +219,7 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.app_name,R.string.app_name
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name
                 //R.drawable.ic_drawer, //nav menu toggle icon
                 //R.string.app_name, // nav drawer open - description for accessibility
                 //R.string.app_name // nav drawer close - description for accessibility
@@ -226,19 +245,11 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         }
 
 
-
-
-
-
-
-
-
-
     }
 
     /**
      * Slide menu item click listener
-     * */
+     */
     private class SlideMenuClickListener implements
             ListView.OnItemClickListener {
         @Override
@@ -266,8 +277,16 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
             case R.id.action_settings:
                 return true;
 
+            case R.id.change_password_settings:
+                Intent in = new Intent(this, ChangePasswordActivity.class);
+                startActivity(in);
+                return true;
+
+
             case R.id.log_out_settings:
                 logoutUser();
+
+
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -275,7 +294,7 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         }
     }
 
-    /***
+    /**
      * Called when invalidateOptionsMenu() is triggered
      */
     @Override
@@ -283,13 +302,15 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        menu.findItem(R.id.change_password_settings).setVisible(!drawerOpen);
         menu.findItem(R.id.log_out_settings).setVisible(!drawerOpen);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
     /**
      * Diplaying fragment view for selected nav drawer list item
-     * */
+     */
     private void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
@@ -349,6 +370,5 @@ public class MainActivity extends AppCompatActivity /*ActionBarActivity*/ {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-
 }
+
