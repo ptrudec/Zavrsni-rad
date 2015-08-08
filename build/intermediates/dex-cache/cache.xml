@@ -2,11 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Pero\Desktop\Eimenik\app\libs\volley.jar"
+        jar="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\exploded-aar\com.android.support\support-v13\22.2.0\jars\libs\internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="d4aaa36e04ee71a83444f8367c97a46fda662d2c">
-        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\volley-c3a74042f71e86f5101c9bb2319e7b20c02ff511.jar" />
+        sha1="79a5b6d9fbab3b5fb4c6f86a1ed7a17722fd937b">
+        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-bf974dff023bbb604080515d92c0af35023a4371.jar" />
+    </item>
+    <item
+        jar="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
+        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\classes-a263929dc142a1dda89f4d43e8360539b2bf5c7a.jar" />
     </item>
     <item
         jar="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
@@ -14,13 +21,6 @@
         revision="22.0.1"
         sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
         <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-ec57f48f008bc674606b4a9e6f1a2f8d59971241.jar" />
-    </item>
-    <item
-        jar="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\exploded-aar\com.android.support\support-v13\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="79a5b6d9fbab3b5fb4c6f86a1ed7a17722fd937b">
-        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-bf974dff023bbb604080515d92c0af35023a4371.jar" />
     </item>
     <item
         jar="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\exploded-aar\com.android.support\support-v13\22.2.0\jars\classes.jar"
@@ -37,11 +37,39 @@
         <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\classes-2097b5c9a85f15d47f2e3146a9f6a910ecc7884b.jar" />
     </item>
     <item
+        jar="C:\Users\Pero\Desktop\Eimenik\app\libs\activation.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d1257cbff6faa44c1f325ae0d9413522d4644383">
+        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\activation-53a7e39c6b8428bc93c834bd405ecc2735ad3403.jar" />
+    </item>
+    <item
+        jar="C:\Users\Pero\Desktop\Eimenik\app\libs\mail.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="428e267abff0d10802ccde86b915da2c20471160">
+        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\mail-2e814732b4fac13cbcafb3b67a32b5c765acd303.jar" />
+    </item>
+    <item
+        jar="C:\Users\Pero\Desktop\Eimenik\app\libs\volley.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d4aaa36e04ee71a83444f8367c97a46fda662d2c">
+        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\volley-c3a74042f71e86f5101c9bb2319e7b20c02ff511.jar" />
+    </item>
+    <item
         jar="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
         <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\classes-cf7dd469329b46a923b52cb63ec34491bac3da5e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Pero\Desktop\Eimenik\app\libs\additionnal.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="bd9e8dc422bb8c8405359947fe9f4282b49f57f4">
+        <dex dex="C:\Users\Pero\Desktop\Eimenik\app\build\intermediates\pre-dexed\debug\additionnal-4381a894795e5fdf6c5ec37103ac57c5defeff72.jar" />
     </item>
     <item
         jar="C:\Users\Pero\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"

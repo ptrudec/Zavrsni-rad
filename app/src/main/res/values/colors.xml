@@ -8,4 +8,6 @@
     <color name="list_ocjene_end_color">#ffffff</color>
     <color name="list_ocjene_hover_start_color">#ebeef0</color>
     <color name="list_ocjene_hover_end_color">#ebeef0</color>
+
+    <color name="refresh">#26ae90</color>
     </resources>

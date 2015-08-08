@@ -8,11 +8,14 @@
     <string name="btn_login">PRIJAVA</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_recover">Zaboravili ste lozinku? Kliknite ovdje.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="btn_change">Promijeni lozinku</string>
     <string name="hint_old_pass">Stara lozinka</string>
     <string name="hint_new_pass">Nova lozinka</string>
     <string name="hint_new_pass1">Ponovite novu lozinku</string>
+    <string name="hint_recover">Unesite e-mail za resetiranje lozinke</string>
+    <string name="btn_recover">Resetiraj lozinku</string>
 
 
     <string name="action_settings">Postavke</string>
@@ -26,6 +29,7 @@
 
     <string name="grades_activity">Ocjene</string>
     <string name="chang_pass_activity">Promjena lozinke</string>
+    <string name="rec_pass_activity">Reset lozinke</string>
     <string-array name="nav_drawer_items">
         <item >Naslovna</item>
         <item >Predmeti</item>

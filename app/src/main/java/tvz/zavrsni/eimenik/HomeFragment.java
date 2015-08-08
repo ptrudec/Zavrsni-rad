@@ -3,10 +3,12 @@ package tvz.zavrsni.eimenik;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,7 +47,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 
     private List<Ocjene> ocjene = new ArrayList<>();
+
     private ListView listView;
+    //private RecyclerView listView;
     private OcjeneListAdapter adapter1;
 
 
@@ -61,16 +65,15 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         db = new SQLiteHandler(getActivity().getApplicationContext());
         //ocjene = db.getZadnjeOcjene();
         ocjene.addAll(db.getZadnjeOcjene());
-        Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
+        //Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         listView = (ListView) rootView.findViewById(R.id.list_posljednje_ocjene);
+        //listView = (RecyclerView) rootView.findViewById(R.id.list_posljednje_ocjene);
         adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
         listView.setAdapter(adapter1);
-
-
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -79,36 +82,53 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                     @Override
                                     public void run() {
 
+                                        fetchGrades();
+                                        //listView.removeAllViewsInLayout();
+                                        ocjene.clear();
+                                        ocjene.addAll(db.getZadnjeOcjene());
+                                        //adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
+                                        //listView.setAdapter(adapter1);
+
+                                        listView.invalidateViews();
+                                        //adapter1.notifyDataSetChanged();
+
+                                        Toast.makeText(getActivity().getApplicationContext(),
+                                                "Ocjene ažurirane", Toast.LENGTH_LONG).show();
                                     }
                                 }
         );*/
 
-
-        db.close();
 
         return rootView;
     }
 
 
 
+
+
     public void onRefresh() {
         db = new SQLiteHandler(getActivity().getApplicationContext());
         fetchGrades();
+        //listView.removeAllViewsInLayout();
         ocjene.clear();
         ocjene.addAll(db.getZadnjeOcjene());
-
+        adapter1=null;
+        //adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
+        //listView.setAdapter(adapter1);
         //ocjene=db.getZadnjeOcjene();
-        //Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
+       // Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
         //
-        adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
-        listView.setAdapter(adapter1);
-        adapter1.notifyDataSetChanged();
+
+        listView.invalidateViews();
+        //adapter1.notifyDataSetChanged();
+
+
+
 
 
         Toast.makeText(getActivity().getApplicationContext(),
                 "Ocjene ažurirane", Toast.LENGTH_LONG).show();
 
-        db.close();
 
 
     }

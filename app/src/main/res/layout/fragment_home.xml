@@ -9,6 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!--<android.support.v7.widget.RecyclerView
+            android:id="@+id/list_posljednje_ocjene"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp"
+            android:listSelector="@drawable/list_ocjene_selector"
+            android:clickable="false" />-->
+
     <!--
     <TextView
         android:id="@+id/txtLabel"

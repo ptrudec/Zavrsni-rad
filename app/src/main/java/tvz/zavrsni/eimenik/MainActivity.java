@@ -71,12 +71,13 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new SQLiteHandler(getApplicationContext());
+        /*db = new SQLiteHandler(getApplicationContext());
         session = new SessionManager(getApplicationContext());
 
         if (!session.isLoggedIn()) {
             logoutUser();
         }
+        */
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -142,6 +143,16 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         }
 
 
+    }
+
+    protected void onStart(){
+        super.onStart();
+        db = new SQLiteHandler(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
+
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
     }
 
     /**

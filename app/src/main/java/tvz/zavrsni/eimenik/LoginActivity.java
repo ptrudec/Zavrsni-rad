@@ -8,9 +8,6 @@ import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.SessionManager;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,10 +49,10 @@ public class LoginActivity extends Activity {
     JSONArray predmeti = null;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        db = new SQLiteHandler(getApplicationContext());
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        db = new SQLiteHandler(getApplicationContext());
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -65,6 +62,12 @@ public class LoginActivity extends Activity {
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
+
+
+    }
+
+    protected void onStart(){
+        super.onStart();
 
         // Session manager
         session = new SessionManager(getApplicationContext());
@@ -87,6 +90,7 @@ public class LoginActivity extends Activity {
                 // Check for empty data in the form
                 if (korisnicko_ime.trim().length() > 0 && password.trim().length() > 0) {
                     // login user
+
                     checkLogin(korisnicko_ime, password);
                 } else {
                     // Prompt user to enter credentials
@@ -98,18 +102,20 @@ public class LoginActivity extends Activity {
 
         });
 
-        // Link to Register Screen
+
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
+                        RecoverPasswordActivity.class);
                 startActivity(i);
                 finish();
             }
         });
 
     }
+
+
 
     /**
      * function to verify login details in mysql db
@@ -242,13 +248,8 @@ public class LoginActivity extends Activity {
                         db.addUser(id_ucenika, ime, prezime, korisnicko_ime);
                         db.addUpis(id_upisa, id_ucenika, id_razreda, datum_upisa);
                         db.addRazredi(raz_id_razreda, godina, razred, godina_upisa);
-                        //db.addUpisaniPredmeti(redni_br_upisa, upisani_id_upisa, upisani_id_predmeta, upisani_datum_upisa, zavrsna_ocjena_predmeta, datum_zavrsne_ocjene);
-                        //db.addPredmeti(id_predmeta, naziv_predmeta);
                         db.addNastavnici(id_nastavnika, oib_nastavnika, nastavnici_ime, nastavnici_prezime);
                         db.addRaz_pred_nast(raz_pred_nast_id_razreda, raz_pred_nast_id_nastavnika, raz_pred_nast_redni_br_upisa, datum_od, datum_do);
-                        //db.addOcjene(redni_broj_ocjene, ocjene_id_ucenika, id_rubrike, ocjene_redni_br_upisa, ocjena, datum_ocjene, ocjene_komentar);
-                        //db.addRubrike(rubrike_id_rubrike, naziv_rubrike);
-                        //db.addKomentar(komentar_id_nastavnika, komentar_id_ucenika, komentar_redni_br_upisa, datum, komentar_komentar);
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,

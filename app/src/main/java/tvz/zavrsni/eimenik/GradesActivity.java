@@ -41,7 +41,7 @@ public class GradesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grades);
         Bundle bundle = getIntent().getExtras();
-        var=bundle.getInt("var_upis");
+        /*var=bundle.getInt("var_upis");
 
         db = new SQLiteHandler(this.getApplicationContext());
         ocjene = db.getAllOcjene(var);
@@ -55,8 +55,7 @@ public class GradesActivity extends AppCompatActivity {
 
         listView4.setAdapter(adapter4);
 
-        db.close();
-        adapter4.notifyDataSetChanged();
+        adapter4.notifyDataSetChanged();*/
 
     }
 

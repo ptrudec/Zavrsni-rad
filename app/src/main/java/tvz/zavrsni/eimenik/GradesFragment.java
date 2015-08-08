@@ -56,7 +56,6 @@ public class GradesFragment extends Fragment implements SwipeRefreshLayout.OnRef
                                 }
         );*/
 
-        db.close();
         adapter3.notifyDataSetChanged();
 
 
