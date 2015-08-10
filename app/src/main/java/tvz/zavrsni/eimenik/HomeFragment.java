@@ -1,8 +1,17 @@
 package tvz.zavrsni.eimenik;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,16 +31,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
+import tvz.zavrsni.eimenik.adapter.MyAdapter;
 import tvz.zavrsni.eimenik.adapter.OcjeneListAdapter;
 import tvz.zavrsni.eimenik.app.AppConfig;
 import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.Ocjene;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
+import tvz.zavrsni.eimenik.receiver.AlarmReceiver;
 
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -44,14 +57,15 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private String var_id = null;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-
-
     private List<Ocjene> ocjene = new ArrayList<>();
 
     private ListView listView;
-    //private RecyclerView listView;
     private OcjeneListAdapter adapter1;
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private Context mContext;
 
 
     public HomeFragment() {
@@ -61,27 +75,36 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        mContext = getActivity();
         db = new SQLiteHandler(getActivity().getApplicationContext());
         //ocjene = db.getZadnjeOcjene();
         ocjene.addAll(db.getZadnjeOcjene());
-        //Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         listView = (ListView) rootView.findViewById(R.id.list_posljednje_ocjene);
-        //listView = (RecyclerView) rootView.findViewById(R.id.list_posljednje_ocjene);
         adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
         listView.setAdapter(adapter1);
 
+/*
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list_posljednje_ocjene);
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter= new MyAdapter(HomeFragment.this.getActivity(), ocjene);
+        mRecyclerView.setAdapter(mAdapter);
+*/
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        /*swipeRefreshLayout.post(new Runnable() {
+
+        swipeRefreshLayout.post(new Runnable() {
                                     @Override
                                     public void run() {
 
+
+                                    /*
                                         fetchGrades();
                                         //listView.removeAllViewsInLayout();
                                         ocjene.clear();
@@ -93,37 +116,65 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                         //adapter1.notifyDataSetChanged();
 
                                         Toast.makeText(getActivity().getApplicationContext(),
-                                                "Ocjene ažurirane", Toast.LENGTH_LONG).show();
+                                                "Ocjene ažurirane", Toast.LENGTH_LONG).show();*/
                                     }
                                 }
-        );*/
+        );
 
-
+        //setRecurringAlarm(getActivity().getApplicationContext());
         return rootView;
     }
 
 
+    private void setRecurringAlarm(Context context) {
 
+        // we know mobiletuts updates at right around 1130 GMT.
+        // let's grab new stuff at around 11:45 GMT, inexactly
+        Calendar updateTime = Calendar.getInstance();
+        updateTime.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+        updateTime.set(Calendar.HOUR_OF_DAY, 20);
+        updateTime.set(Calendar.MINUTE, 36);
+
+        //updateTime.add(Calendar.SECOND, 30);
+
+        Intent downloader = new Intent(context, AlarmReceiver.class);
+        PendingIntent recurringDownload = PendingIntent.getBroadcast(context,
+                0, downloader, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarms = (AlarmManager) getActivity().getSystemService(
+                Context.ALARM_SERVICE);
+        alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                updateTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
+                recurringDownload);
+    }
 
 
     public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
         db = new SQLiteHandler(getActivity().getApplicationContext());
         fetchGrades();
-        //listView.removeAllViewsInLayout();
-        ocjene.clear();
-        ocjene.addAll(db.getZadnjeOcjene());
-        adapter1=null;
+        //ocjene.clear();
+        //ocjene.addAll(db.getZadnjeOcjene());
+
+        /*new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.notifyDataSetChanged();
+
+            }
+        });*/
+
+
+
+
+        //adapter1=null;
         //adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
         //listView.setAdapter(adapter1);
         //ocjene=db.getZadnjeOcjene();
        // Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
         //
 
-        listView.invalidateViews();
+        //listView.invalidateViews();
         //adapter1.notifyDataSetChanged();
-
-
-
 
 
         Toast.makeText(getActivity().getApplicationContext(),
@@ -133,8 +184,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     }
 
-    private void fetchGrades() {
-        swipeRefreshLayout.setRefreshing(true);
+
+
+
+    public void fetchGrades() {
+
         String tag_string_req = "req_update";
 
         var_dat = db.getLatestDate();
@@ -180,8 +234,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     // JSON error
                     e.printStackTrace();
                 }
-
+                ocjene.clear();
+                ocjene.addAll(db.getZadnjeOcjene());
+                adapter1.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
+
+
             }
         }
                 , new Response.ErrorListener() {
@@ -191,7 +249,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Log.e(TAG, "Update Error: " + error.getMessage());
                 Toast.makeText(getActivity().getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
-                swipeRefreshLayout.setRefreshing(false);
+
             }
         }) {
 

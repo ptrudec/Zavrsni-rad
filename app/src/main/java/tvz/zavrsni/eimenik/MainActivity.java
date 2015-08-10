@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLayout.OnRefreshListener *//*ActionBarActivity*/ {
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         startActivity(intent);
         finish();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
