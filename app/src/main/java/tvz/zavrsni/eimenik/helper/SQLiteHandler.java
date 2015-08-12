@@ -516,6 +516,19 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return date;
     }
 
+    public String getLatestDateComments() {
+        String selectQuery = "SELECT " + KEY_DATUM_KOMENTARA + " FROM " + TABLE_KOMENTAR + " ORDER BY " + KEY_DATUM_KOMENTARA + " DESC LIMIT 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        String date = cursor.getString(cursor.getColumnIndex(KEY_DATUM_KOMENTARA));
+        db.close();
+        cursor.close();
+
+        // return row count
+        return date;
+    }
+
     public String getId() {
         String selectQuery = "SELECT " + KEY_ID_UCENIKA + " FROM " + TABLE_UCENICI;
         SQLiteDatabase db = this.getReadableDatabase();

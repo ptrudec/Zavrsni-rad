@@ -17,7 +17,7 @@ import tvz.zavrsni.eimenik.adapter.PredmetiListAdapter;
 import tvz.zavrsni.eimenik.helper.Predmeti;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 
-public class GradesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class GradesFragment extends Fragment {
 
     private SQLiteHandler db;
 
@@ -25,8 +25,6 @@ public class GradesFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private List<Predmeti> predmeti=new ArrayList<>();
     private ListView listView3;
     private PredmetiListAdapter adapter3;
-
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     public GradesFragment(){}
 
@@ -44,26 +42,12 @@ public class GradesFragment extends Fragment implements SwipeRefreshLayout.OnRef
         adapter3 = new PredmetiListAdapter(GradesFragment.this.getActivity(), predmeti);
         listView3.setAdapter(adapter3);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh2_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
 
-        /*swipeRefreshLayout.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        //swipeRefreshLayout.setRefreshing(true);
-
-                                    }
-                                }
-        );*/
 
         adapter3.notifyDataSetChanged();
 
 
         return rootView;
     }
-    public void onRefresh() {
 
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Ocjene ažurirane", Toast.LENGTH_LONG).show();
-    }
 }

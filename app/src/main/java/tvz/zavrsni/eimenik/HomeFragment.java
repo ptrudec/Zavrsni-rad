@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mContext = getActivity();
+        //mContext = getActivity();
         db = new SQLiteHandler(getActivity().getApplicationContext());
         //ocjene = db.getZadnjeOcjene();
         ocjene.addAll(db.getZadnjeOcjene());
@@ -102,21 +102,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout.post(new Runnable() {
                                     @Override
                                     public void run() {
-
-
-                                    /*
                                         fetchGrades();
-                                        //listView.removeAllViewsInLayout();
-                                        ocjene.clear();
-                                        ocjene.addAll(db.getZadnjeOcjene());
-                                        //adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
-                                        //listView.setAdapter(adapter1);
-
-                                        listView.invalidateViews();
-                                        //adapter1.notifyDataSetChanged();
-
-                                        Toast.makeText(getActivity().getApplicationContext(),
-                                                "Ocjene ažurirane", Toast.LENGTH_LONG).show();*/
                                     }
                                 }
         );
@@ -150,7 +136,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        db = new SQLiteHandler(getActivity().getApplicationContext());
         fetchGrades();
         //ocjene.clear();
         //ocjene.addAll(db.getZadnjeOcjene());
@@ -260,7 +245,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 param.put("datum",var_dat);
                 param.put("id_var",var_id);
 
-                Log.d(TAG, "Update Response: " + param.toString());
+                Log.d(TAG, "Grade Response: " + param.toString());
                 return param;
             }
 
