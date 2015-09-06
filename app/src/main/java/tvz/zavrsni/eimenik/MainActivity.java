@@ -27,7 +27,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLayout.OnRefreshListener *//*ActionBarActivity*/ {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
