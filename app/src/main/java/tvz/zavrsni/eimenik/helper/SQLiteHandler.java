@@ -77,7 +77,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_UCENICI = "CREATE TABLE " + TABLE_UCENICI + "("
             + KEY_ID_UCENIKA + " INTEGER PRIMARY KEY, " + KEY_IME + " TEXT,"
             + KEY_PREZIME + " TEXT, " + KEY_KORISNICKO_IME + " TEXT " + ")";
-    //+ KEY_UID + " TEXT" + ")";
 
     private static final String CREATE_TABLE_UPIS = "CREATE TABLE " + TABLE_UPIS + "("
             + KEY_ID_UPISA + " INTEGER PRIMARY KEY, " + KEY_ID_UCENIKA + " INTEGER, "
@@ -183,7 +182,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    //public void addUser(String name, String surname, String email, String uid) {
         public void addUser(Integer id_ucenika, String ime, String prezime, String korisnicko_ime) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -192,8 +190,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_PREZIME, prezime); // Surname
         values.put(KEY_KORISNICKO_IME, korisnicko_ime); // Email
         values.put(KEY_ID_UCENIKA, id_ucenika);
-        //values.put(KEY_UID, uid);
-
 
         // Inserting Row
         long id = db.insert(TABLE_UCENICI, null, values);
@@ -204,16 +200,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     public void addUpis(Integer id_upisa, Integer id_ucenika, Integer id_razreda, String datum_upisa) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_UPISA, id_upisa); // Name
-        values.put(KEY_ID_UCENIKA, id_ucenika); // Surname
-        values.put(KEY_ID_RAZREDA, id_razreda); // Email
+        values.put(KEY_ID_UPISA, id_upisa);
+        values.put(KEY_ID_UCENIKA, id_ucenika);
+        values.put(KEY_ID_RAZREDA, id_razreda);
         values.put(KEY_DATUM_UPISA, datum_upisa);
-        // Inserting Row
         long id = db.insert(TABLE_UPIS, null, values);
-        db.close(); // Closing database connection
-
+        db.close();
         Log.d(TAG, "New upis inserted into sqlite: " + id);
     }
 
@@ -246,7 +239,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         long id = db.insert(TABLE_UPISANI_PREDMETI, null, values);
         db.close(); // Closing database connection
 
-        Log.d(TAG, "New razredi inserted into sqlite: " + id);
+        Log.d(TAG, "New upisani predmeti inserted into sqlite: " + id);
     }
 
     public void addPredmeti(Integer id_predmeta, String naziv_predmeta) {
@@ -349,33 +342,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New komentar inserted into sqlite: " + id);
     }
 
-
-    /**
-     * Getting user data from database
-     * */
-    public HashMap<String, String> getUserDetails() {
-        HashMap<String, String> user = new HashMap<String, String>();
-        String selectQuery = "SELECT * FROM " + TABLE_UCENICI;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // Move to first row
-        cursor.moveToFirst();
-        if (cursor.getCount() > 0) {
-                user.put("ime", cursor.getString(1));
-                user.put("prezime", cursor.getString(2));
-                user.put("korisnicko_ime", cursor.getString(3));
-
-        }
-        cursor.close();
-        db.close();
-        // return user
-        Log.d(TAG, "Fetching user from Sqlite: " + user.toString());
-
-        return user;
-    }
-
-
     public List<Ocjene> getZadnjeOcjene() {
         List<Ocjene> ocjene = new ArrayList<Ocjene>();
         String selectQuery = "SELECT " + KEY_OCJENA + ", " + KEY_DATUM_OCJENE + ", " + KEY_NAZIV_RUBRIKE + ", " + KEY_NAZIV_PREDMETA + "," + KEY_KOMENTAR + " FROM " + TABLE_OCJENE + " JOIN "
@@ -388,7 +354,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
                 Ocjene oc = new Ocjene();
@@ -398,7 +363,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 oc.setPredmet(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
                 oc.setKomentar(c.getString(c.getColumnIndex(KEY_KOMENTAR)));
 
-                // adding to ocjene list
                 ocjene.add(oc);
             } while (c.moveToNext());
         }
@@ -417,7 +381,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
                 Ocjene oc = new Ocjene();
@@ -427,7 +390,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 oc.setPredmet(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
                 oc.setKomentar(c.getString(c.getColumnIndex(KEY_KOMENTAR)));
 
-                // adding to ocjene list
                 ocjene.add(oc);
             } while (c.moveToNext());
         }
@@ -445,15 +407,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
                 Predmeti pr = new Predmeti();
                 pr.setNazivPredmeta((c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA))));
                 pr.setRedniBrUpisa(c.getInt(c.getColumnIndex(KEY_REDNI_BR_UPISA)));
 
-
-                // adding to ocjene list
                 predmeti.add(pr);
             } while (c.moveToNext());
         }
@@ -480,27 +439,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 kom.setNaziv_predmeta(c.getString(c.getColumnIndex(KEY_NAZIV_PREDMETA)));
                 kom.setKomentarKomentar(c.getString(c.getColumnIndex(KEY_KOMENTAR)));
 
-                // adding to ocjene list
                 komentari.add(kom);
             } while (c.moveToNext());
         }
 
         return komentari;
-    }
-
-    /**
-     * Getting user login status return true if rows are there in table
-     * */
-    public int getRowCount() {
-        String countQuery = "SELECT * FROM " + TABLE_UCENICI;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        int rowCount = cursor.getCount();
-        db.close();
-        cursor.close();
-
-        // return row count
-        return rowCount;
     }
 
     public String getLatestDate() {
@@ -512,7 +455,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close();
         cursor.close();
 
-        // return row count
         return date;
     }
 
@@ -525,7 +467,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close();
         cursor.close();
 
-        // return row count
         return date;
     }
 
@@ -538,7 +479,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close();
         cursor.close();
 
-        // return row count
         return id;
     }
     /**
@@ -561,7 +501,4 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         Log.d(TAG, "Deleted all user info from sqlite");
     }
-
-
-
 }

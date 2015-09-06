@@ -1,23 +1,14 @@
 package tvz.zavrsni.eimenik;
 
-import android.app.AlarmManager;
 import android.app.Fragment;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,20 +22,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.TimeZone;
 
-import tvz.zavrsni.eimenik.adapter.MyAdapter;
 import tvz.zavrsni.eimenik.adapter.OcjeneListAdapter;
 import tvz.zavrsni.eimenik.app.AppConfig;
 import tvz.zavrsni.eimenik.app.AppController;
 import tvz.zavrsni.eimenik.helper.Ocjene;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
-import tvz.zavrsni.eimenik.receiver.AlarmReceiver;
 
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -62,12 +48,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private ListView listView;
     private OcjeneListAdapter adapter1;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private Context mContext;
-
-
     public HomeFragment() {
     }
 
@@ -75,9 +55,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //mContext = getActivity();
         db = new SQLiteHandler(getActivity().getApplicationContext());
-        //ocjene = db.getZadnjeOcjene();
         ocjene.addAll(db.getZadnjeOcjene());
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -87,14 +65,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
         listView.setAdapter(adapter1);
 
-/*
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list_posljednje_ocjene);
-        mLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter= new MyAdapter(HomeFragment.this.getActivity(), ocjene);
-        mRecyclerView.setAdapter(mAdapter);
-*/
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -107,74 +77,22 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                 }
         );
 
-        //setRecurringAlarm(getActivity().getApplicationContext());
         return rootView;
     }
 
-
-    private void setRecurringAlarm(Context context) {
-
-        // we know mobiletuts updates at right around 1130 GMT.
-        // let's grab new stuff at around 11:45 GMT, inexactly
-        Calendar updateTime = Calendar.getInstance();
-        updateTime.setTimeZone(TimeZone.getTimeZone("GMT+2"));
-        updateTime.set(Calendar.HOUR_OF_DAY, 20);
-        updateTime.set(Calendar.MINUTE, 36);
-
-        //updateTime.add(Calendar.SECOND, 30);
-
-        Intent downloader = new Intent(context, AlarmReceiver.class);
-        PendingIntent recurringDownload = PendingIntent.getBroadcast(context,
-                0, downloader, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarms = (AlarmManager) getActivity().getSystemService(
-                Context.ALARM_SERVICE);
-        alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                updateTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
-                recurringDownload);
-    }
 
 
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         fetchGrades();
-        //ocjene.clear();
-        //ocjene.addAll(db.getZadnjeOcjene());
-
-        /*new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.notifyDataSetChanged();
-
-            }
-        });*/
-
-
-
-
-        //adapter1=null;
-        //adapter1 = new OcjeneListAdapter(HomeFragment.this.getActivity(), ocjene);
-        //listView.setAdapter(adapter1);
-        //ocjene=db.getZadnjeOcjene();
-       // Log.d(TAG, "Ocjene2 list: " + ocjene.toString());
-        //
-
-        //listView.invalidateViews();
-        //adapter1.notifyDataSetChanged();
-
-
         Toast.makeText(getActivity().getApplicationContext(),
                 "Ocjene ažurirane", Toast.LENGTH_LONG).show();
 
-
-
     }
-
-
-
 
     public void fetchGrades() {
 
-        String tag_string_req = "req_update";
+        String tag_string_req = "req_grades";
 
         var_dat = db.getLatestDate();
         var_id = db.getId();

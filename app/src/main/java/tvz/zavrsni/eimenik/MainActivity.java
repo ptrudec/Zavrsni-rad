@@ -28,39 +28,24 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLayout.OnRefreshListener *//*ActionBarActivity*/ {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
-    // nav drawer title
     private CharSequence mDrawerTitle;
-
-    // used to store app title
     private CharSequence mTitle;
-
-    // slide menu items
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
-
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
-
-
     private SQLiteHandler db;
     private SessionManager session;
-
-    private List<Ocjene> ocjene = new ArrayList<>();
-    private ListView listView;
-    private OcjeneListAdapter adapter1;
 
 
     private void logoutUser() {
         session.setLogin(false);
 
         db.deleteUsers();
-
-        // Launching the login activity
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
@@ -72,21 +57,10 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*db = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
-
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
-        */
-
         mTitle = mDrawerTitle = getTitle();
 
-        // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-        // nav drawer icons from resources
         navMenuIcons = getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);
 
@@ -94,39 +68,25 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
         navDrawerItems = new ArrayList<NavDrawerItem>();
-
-        // adding nav drawer items to array
-        // Home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 
-
-        // Recycle the typed array
         navMenuIcons.recycle();
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-
-        // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
-        // enabling action bar app icon and behaving it as toggle button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name
-                //R.drawable.ic_drawer, //nav menu toggle icon
-                //R.string.app_name, // nav drawer open - description for accessibility
-                //R.string.app_name // nav drawer close - description for accessibility
         ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
-                // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
@@ -144,7 +104,6 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
             displayView(0);
         }
 
-
     }
 
     protected void onStart(){
@@ -157,9 +116,6 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         }
     }
 
-    /**
-     * Slide menu item click listener
-     */
     private class SlideMenuClickListener implements
             ListView.OnItemClickListener {
         @Override
@@ -198,12 +154,8 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         }
     }
 
-    /**
-     * Called when invalidateOptionsMenu() is triggered
-     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         menu.findItem(R.id.change_password_settings).setVisible(!drawerOpen);
@@ -212,11 +164,8 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         return super.onPrepareOptionsMenu(menu);
     }
 
-    /**
-     * Diplaying fragment view for selected nav drawer list item
-     */
+
     private void displayView(int position) {
-        // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
             case 0:
@@ -238,13 +187,11 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();
 
-            // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
-            // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
@@ -255,22 +202,16 @@ public class MainActivity extends AppCompatActivity /*implements SwipeRefreshLay
         getSupportActionBar().setTitle(mTitle);
     }
 
-    /**
-     * When using the ActionBarDrawerToggle, you must call it during
-     * onPostCreate() and onConfigurationChanged()...
-     */
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 

@@ -32,8 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 public class LoginActivity extends Activity {
-    // LogCat tag
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private Button btnLogin;
     private Button btnLinkToRegister;
     private EditText inputEmail;
@@ -301,7 +300,6 @@ public class LoginActivity extends Activity {
 
         };
 
-        // Adding request to request queue
             AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

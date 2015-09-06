@@ -110,8 +110,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         finish();
                     } else {
 
-                        // Error occurred in registration. Get the error
-                        // message
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
@@ -157,7 +155,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         };
 
-        // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

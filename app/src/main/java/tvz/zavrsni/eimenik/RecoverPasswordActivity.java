@@ -36,7 +36,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
 
     private static final String TAG = RecoverPasswordActivity.class.getSimpleName();
-    //Context context;
     private Button bttnReset;
     private EditText email;
     private ProgressDialog pDialog;
@@ -46,8 +45,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover_password);
 
-        //context = this;
-
         email = (EditText) findViewById(R.id.email);
         bttnReset = (Button) findViewById(R.id.btnRecover);
 
@@ -56,7 +53,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
 
         if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
             Intent intent = new Intent(RecoverPasswordActivity.this,
                     MainActivity.class);
             startActivity(intent);
@@ -82,7 +78,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
     private void checkEmail(final String mail){
 
-        String tag_string_req = "req_update";
+        String tag_string_req = "req_recover";
 
         pDialog.setMessage("Provjera maila ...");
         showDialog();
@@ -101,8 +97,8 @@ public class RecoverPasswordActivity extends AppCompatActivity {
                         JSONObject hash = jObj.getJSONObject("promjena");
                         String hsh = hash.getString("hash");
                         BackgroundMail bm = new BackgroundMail(RecoverPasswordActivity.this);
-                        bm.setGmailUserName("ptrudec@gmail.com");
-                        bm.setGmailPassword("m2K!akLdj5Z");
+                        bm.setGmailUserName("e-imenik@gmail.com");
+                        bm.setGmailPassword("password");
                         bm.setMailTo(mail);
                         bm.setFormSubject("Eimenik reset lozinke");
                         bm.setFormBody("Molimo vas da na sljedećem linku resetirate lozinku: \r\n" + "http://localhost:8000/eimenik/reset_password.php?id=" +hsh +
@@ -112,7 +108,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Molimo provjerite e-mail pretinac!", Toast.LENGTH_LONG).show();
 
-                        // Launch login activity
                         Intent intent = new Intent(
                                 RecoverPasswordActivity.this,
                                 LoginActivity.class);
@@ -120,8 +115,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
                         finish();
                     } else {
 
-                        // Error occurred in registration. Get the error
-                        // message
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
@@ -154,7 +147,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() {
-                // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("tag", "check_email");
                 params.put("mail", mail);
@@ -164,7 +156,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
         };
 
-        // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

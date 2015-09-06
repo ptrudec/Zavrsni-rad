@@ -60,7 +60,6 @@ public class CommentsFragment extends Fragment implements SwipeRefreshLayout.OnR
         listView2 = (ListView) rootView.findViewById(R.id.list_komentari);
         adapter2 = new KomentariListAdapter(CommentsFragment.this.getActivity(), komentari);
 
-        //dodavanje teksta ako nema komentara
         TextView emptyText = (TextView) rootView.findViewById(android.R.id.empty);
         listView2.setEmptyView(emptyText);
 

@@ -1,13 +1,9 @@
 package tvz.zavrsni.eimenik;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +30,6 @@ import tvz.zavrsni.eimenik.helper.Ocjene;
 import tvz.zavrsni.eimenik.helper.SQLiteHandler;
 
 
-/**
- * Created by Pero on 25.7.2015..
- */
 public class GradesActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = GradesActivity.class.getSimpleName();
@@ -68,7 +61,6 @@ public class GradesActivity extends AppCompatActivity implements SwipeRefreshLay
         listView4 = (ListView) findViewById(R.id.list_ocj);
         adapter4 = new OcjeneListAdapter(this, ocjene);
 
-        //dodavanje teksta ako nema ocjena
         TextView emptyText = (TextView)findViewById(android.R.id.empty);
         listView4.setEmptyView(emptyText);
         listView4.setAdapter(adapter4);
@@ -79,9 +71,7 @@ public class GradesActivity extends AppCompatActivity implements SwipeRefreshLay
         swipeRefreshLayout.post(new Runnable() {
                                     @Override
                                     public void run() {
-
                                         fetchGrades();
-
                                     }
                                 }
         );
@@ -94,17 +84,13 @@ public class GradesActivity extends AppCompatActivity implements SwipeRefreshLay
         swipeRefreshLayout.setRefreshing(true);
         fetchGrades();
 
-
         Toast.makeText(GradesActivity.this.getApplicationContext(),
                 "Ocjene ažurirane", Toast.LENGTH_LONG).show();
-
-
 
     }
     public void fetchGrades() {
 
-        String tag_string_req = "req_update";
-
+        String tag_string_req = "req_grades";
         var_dat = db.getLatestDate();
         var_id = db.getId();
         Log.d(TAG, "Variable datum: " + var_dat.toString());
@@ -149,7 +135,7 @@ public class GradesActivity extends AppCompatActivity implements SwipeRefreshLay
                     e.printStackTrace();
                 }
                 ocjene.clear();
-                ocjene.addAll(db.getZadnjeOcjene());
+                ocjene.addAll(db.getAllOcjene(var));
                 adapter4.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
 
@@ -182,8 +168,5 @@ public class GradesActivity extends AppCompatActivity implements SwipeRefreshLay
         };
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
-
-
-
 
 }
