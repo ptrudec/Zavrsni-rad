@@ -1,2 +1,2 @@
-Mobilna aplikacija za praćenje ocjena u školama!
+Android app for monitoring grades in school.
 	
